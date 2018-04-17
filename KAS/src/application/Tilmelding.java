@@ -12,6 +12,7 @@ public class Tilmelding {
     private Hotel hotel;
     private ArrayList<Udflugt> udflugter = new ArrayList<>();
     private ArrayList<HotelTillaeg> hotelTillaeg = new ArrayList<>();
+    private String test;
 
     public Tilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato, Person deltager,
             Person ledsager) {
