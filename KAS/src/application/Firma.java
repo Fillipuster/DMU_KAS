@@ -4,6 +4,9 @@ public class Firma {
 	private String navn;
 	private String telefonNr;
 	private boolean betalerForLedsager;
+	private void namekk() {
+		
+	}
 
 	public Firma(String navn, String telefonNr, boolean betalerForLedsager) {
 		this.navn = navn;
