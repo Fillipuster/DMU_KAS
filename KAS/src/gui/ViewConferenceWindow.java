@@ -27,6 +27,10 @@ public class ViewConferenceWindow extends Stage {
         setScene(scene);
     }
 
+    public void setStageTitle(String title) {
+        setTitle(title);
+    }
+
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
         pane.setPadding(new Insets(20));

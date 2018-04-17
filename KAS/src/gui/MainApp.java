@@ -1,6 +1,5 @@
 package gui;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import application.Konference;
@@ -16,9 +15,9 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         // TEST
-        Konference k1 = new Konference("TestKonference", "TestVej", LocalDateTime.now(), LocalDateTime.now(),
+        Konference _tk0 = new Konference("TestKonference", "TestVej", LocalDateTime.now(), LocalDateTime.now(),
                 "Det er bare en test drenge.");
-        Konference k2 = new Konference("Baconference", "Ham Road 22", LocalDateTime.now(), LocalDateTime.now(),
+        Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now(), LocalDateTime.now(),
                 "Det handler om bacon, drenge.");
         Application.launch(args);
     }
@@ -29,7 +28,8 @@ public class MainApp extends Application {
         GridPane pane = new GridPane();
         initContent(pane);
 
-        // popup = new PopupWindow("Person Information", stage);
+        viewConference = new ViewConferenceWindow("Konferencevisning", stage);
+        createConference = new CreateConferenceWindow("Opret Konference", stage);
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -37,7 +37,8 @@ public class MainApp extends Application {
     }
 
     private final Controller controller = new Controller();
-    // private PopupWindow popup;
+    private ViewConferenceWindow viewConference;
+    private CreateConferenceWindow createConference;
     private ComboBox<Konference> cbKonferencer;
 
     private void initContent(GridPane pane) {
@@ -52,7 +53,7 @@ public class MainApp extends Application {
         cbKonferencer = new ComboBox<>();
         cbKonferencer.setMinWidth(308);
         pane.add(cbKonferencer, 0, 1, 2, 1);
-        cbKonferencer.getItems().addAll(Service.getKonferencer());
+        controller.updateKonferencerListe();
 
         Button btnApply = new Button("Tilmeld Konference");
         pane.add(btnApply, 3, 1);
@@ -72,15 +73,24 @@ public class MainApp extends Application {
 
     private class Controller {
         public void btnCreateAction() {
-            // User presses the "create conference" button.
+            createConference.showAndWait();
+            if (createConference.konference != null) {
+                System.out.println("Konference oprettet!");
+                updateKonferencerListe();
+            }
         }
 
         public void btnViewAction() {
-            // User presses the "view conference" button.
+            viewConference.setStageTitle(cbKonferencer.getSelectionModel().getSelectedItem().getNavn());
+            viewConference.showAndWait();
         }
 
         public void btnApplyAction() {
             // User presses the "apply to conference" button.
+        }
+
+        private void updateKonferencerListe() {
+            cbKonferencer.getItems().setAll(Service.getKonferencer());
         }
     }
 
