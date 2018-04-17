@@ -1,28 +1,28 @@
 package application;
 
-public class HotelTillæg {
-	private String navn;
-	private double pris;
+public class HotelTillaeg {
+    private String navn;
+    private double pris;
 
-	public HotelTillæg(String navn, double pris) {
-		this.navn = navn;
-		this.pris = pris;
-	}
+    public HotelTillaeg(String navn, double pris) {
+        this.navn = navn;
+        this.pris = pris;
+    }
 
-	public String getNavn() {
-		return navn;
-	}
+    public String getNavn() {
+        return navn;
+    }
 
-	public void setNavn(String navn) {
-		this.navn = navn;
-	}
+    public void setNavn(String navn) {
+        this.navn = navn;
+    }
 
-	public double getPris() {
-		return pris;
-	}
+    public double getPris() {
+        return pris;
+    }
 
-	public void setPris(double pris) {
-		this.pris = pris;
-	}
+    public void setPris(double pris) {
+        this.pris = pris;
+    }
 
 }
