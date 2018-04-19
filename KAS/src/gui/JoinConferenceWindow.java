@@ -1,11 +1,13 @@
 package gui;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import application.Hotel;
 import application.HotelTillaeg;
 import application.Konference;
 import application.Service;
+import application.Tilmelding;
 import application.Person;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -70,9 +72,10 @@ public class JoinConferenceWindow extends Stage {
         o = 1;
         for (int i = 0; i < 4; i++) {
             lblPerson[i] = new Label(txtLblPerson[i]);
-            pane.add(lblPerson[i], 0, o);
-            txfDeltager[i] = new TextField(txtTxfPerson[i]);
-            pane.add(txfDeltager[i], 0, o + 1);
+            pane.add(lblPerson[i], 1, o);
+            txfLedsager[i] = new TextField(txtTxfPerson[i]);
+            pane.add(txfLedsager[i], 1, o + 1);
+            txfLedsager[i].setDisable(true);
             o += 2;
         }
 
@@ -130,6 +133,10 @@ public class JoinConferenceWindow extends Stage {
             ledsager = new Person(txfLedsager[0].getText(), txfLedsager[1].getText(), txfLedsager[2].getText(),
                     txfLedsager[3].getText());
         }
+
+        // TODO: Update LocalDate.now.
+        Tilmelding tilmelding = new Tilmelding(konference, LocalDate.now(), LocalDate.now(), deltager, ledsager);
+
         hide();
     }
 
