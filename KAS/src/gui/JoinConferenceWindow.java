@@ -1,15 +1,12 @@
 package gui;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-//import java.util.HashMap;
-//import java.util.Map;
 
 import application.Hotel;
 import application.HotelTillaeg;
 import application.Konference;
 import application.Service;
+import application.Person;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -70,22 +67,21 @@ public class JoinConferenceWindow extends Stage {
             o += 2;
         }
 
+        o = 1;
+        for (int i = 0; i < 4; i++) {
+            lblPerson[i] = new Label(txtLblPerson[i]);
+            pane.add(lblPerson[i], 0, o);
+            txfDeltager[i] = new TextField(txtTxfPerson[i]);
+            pane.add(txfDeltager[i], 0, o + 1);
+            o += 2;
+        }
+
         cbLedsager = new CheckBox("Medbringer ledsager?");
         cbLedsager.setOnAction(event -> cbLedsagerAction());
         pane.add(cbLedsager, 0, 10);
 
         Label lblRubrikLedsager = new Label("Indtast informationer (ledsager):");
         pane.add(lblRubrikLedsager, 1, 0);
-
-        int p = 1;
-        for (int j = 0; j < 4; j++) {
-            lblPerson[j] = new Label(txtLblPerson[j]);
-            pane.add(lblPerson[j], 1, p);
-            txfLedsager[j] = new TextField(txtTxfPerson[j]);
-            pane.add(txfLedsager[j], 1, p + 1);
-            txfLedsager[j].setDisable(true);
-            p += 2;
-        }
 
         Label lblRubrikHotel = new Label("Vælg hotel og evt. tillæg:");
         pane.add(lblRubrikHotel, 2, 0);
@@ -99,43 +95,14 @@ public class JoinConferenceWindow extends Stage {
         cboxTillaeg.setDisable(true);
         pane.add(cboxTillaeg, 2, 4);
 
-        /*
-         * Label lblIntro = new Label("Indtast informationer:"); pane.add(lblIntro, 0,
-         * 0);
-         *
-         * Label lblFornavn = new Label("Fornavn:"); pane.add(lblFornavn, 0, 1);
-         *
-         * txfNavn = new TextField("John"); pane.add(txfNavn, 0, 2);
-         *
-         * Label lblEfternavn = new Label("Efternavn:"); pane.add(lblEfternavn, 0, 3);
-         *
-         * t
-         *
-         * Label lblAdresse = new Label("Adresse:"); pane.add(lblAdresse, 0, 3);
-         *
-         * txfAdresse = new TextField("T. Ulipsvej 69, 1337 Baconistan");
-         * pane.add(txfAdresse, 0, 4);
-         *
-         * Label lblFraDato = new Label("Fra Dato:"); pane.add(lblFraDato, 0, 5);
-         *
-         * txfFraDato = new TextField("<dd-MM-yyyy HH:mm>"); pane.add(txfFraDato, 0, 6);
-         *
-         * Label lblTilDato = new Label("Til dato:"); pane.add(lblTilDato, 0, 7);
-         *
-         * txfTilDato = new TextField("17-02-2019 15:30"); pane.add(txfTilDato, 0, 8);
-         *
-         * Label lblBeskrivelse = new Label("Beskrivelse:"); pane.add(lblBeskrivelse, 0,
-         * 9);
-         *
-         * txfBeskrivelse = new TextField("En konference omkring bacon.");
-         * pane.add(txfBeskrivelse, 0, 10);
-         *
-         * Button btnCancel = new Button("Luk"); pane.add(btnCancel, 0, 11);
-         * btnCancel.setOnAction(event -> btnCancelAction());
-         *
-         * Button btnAccept = new Button("Tilmeld"); pane.add(btnAccept, 1, 11);
-         * btnAccept.setOnAction(event -> btnAcceptAction());
-         */
+        Button btnCancel = new Button("Luk");
+        pane.add(btnCancel, 0, 11);
+        btnCancel.setOnAction(event -> btnCancelAction());
+
+        Button btnAccept = new Button("Tilmeld");
+        pane.add(btnAccept, 1, 11);
+        btnAccept.setOnAction(event -> btnAcceptAction());
+
     }
 
     private void cboxHotelsAction() {
@@ -155,21 +122,18 @@ public class JoinConferenceWindow extends Stage {
         }
     }
 
-    private void btnCancelAction() {
+    private void btnAcceptAction() {
+        Person deltager = new Person(txfDeltager[0].getText(), txfDeltager[1].getText(), txfDeltager[2].getText(),
+                txfDeltager[3].getText());
+        Person ledsager = null;
+        if (cbLedsager.isSelected()) {
+            ledsager = new Person(txfLedsager[0].getText(), txfLedsager[1].getText(), txfLedsager[2].getText(),
+                    txfLedsager[3].getText());
+        }
         hide();
     }
 
-    private void btnAcceptAction() {
-        /*
-         * try { konference = new Konference(txfNavn.getText(), txfAdresse.getText(),
-         * LocalDateTime.parse(txfFraDato.getText(), timeFormat),
-         * LocalDateTime.parse(txfTilDato.getText(), timeFormat),
-         * txfBeskrivelse.getText()); } catch (DateTimeParseException e) {
-         * System.out.println("LocalDateTime parse failed. Using current time.");
-         * konference = new Konference(txfNavn.getText(), txfAdresse.getText(),
-         * LocalDateTime.now(), LocalDateTime.now(), txfBeskrivelse.getText()); }
-         */
-
+    private void btnCancelAction() {
         hide();
     }
 
