@@ -6,11 +6,14 @@ import java.time.format.DateTimeParseException;
 //import java.util.HashMap;
 //import java.util.Map;
 
+import application.Hotel;
 import application.Konference;
+import application.Service;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -55,7 +58,7 @@ public class JoinConferenceWindow extends Stage {
         Label lblRubrikDeltager = new Label("Indtast informationer (deltager):");
         pane.add(lblRubrikDeltager, 0, 0);
 
-        int o = 2;
+        int o = 1;
         for (int i = 0; i < 4; i++) {
             lblPerson[i] = new Label(txtLblPerson[i]);
             pane.add(lblPerson[i], 0, o);
@@ -71,7 +74,7 @@ public class JoinConferenceWindow extends Stage {
         Label lblRubrikLedsager = new Label("Indtast informationer (ledsager):");
         pane.add(lblRubrikLedsager, 1, 0);
 
-        int p = 2;
+        int p = 1;
         for (int j = 0; j < 4; j++) {
             lblPerson[j] = new Label(txtLblPerson[j]);
             pane.add(lblPerson[j], 1, p);
@@ -80,6 +83,13 @@ public class JoinConferenceWindow extends Stage {
             txfLedsager[j].setDisable(true);
             p += 2;
         }
+
+        Label lblRubrikHotel = new Label("Vælg hotel:");
+        pane.add(lblRubrikHotel, 2, 0);
+
+        ComboBox<Hotel> cboxHotels = new ComboBox<>();
+        cboxHotels.getItems().addAll(Service.getHotels());
+        pane.add(cboxHotels, 2, 1);
 
         /*
          * Label lblIntro = new Label("Indtast informationer:"); pane.add(lblIntro, 0,
