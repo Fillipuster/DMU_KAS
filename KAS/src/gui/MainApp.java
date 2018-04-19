@@ -17,8 +17,8 @@ public class MainApp extends Application {
         // TEST
         Konference _tk0 = new Konference("TestKonference", "TestVej", LocalDateTime.now(), LocalDateTime.now(),
                 "Det er bare en test drenge.");
-        Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now(), LocalDateTime.now(),
-                "Det handler om bacon, drenge.");
+        Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
+                LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
         Application.launch(args);
     }
 
