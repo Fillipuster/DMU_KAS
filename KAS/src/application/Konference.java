@@ -10,6 +10,7 @@ public class Konference {
     private LocalDateTime tilDato;
     private String beskrivelse;
     private ArrayList<Tilmelding> tilmeldte = new ArrayList<>();
+    private ArrayList<Udflugt> udflugter = new ArrayList<>();
 
     public Konference(String navn, String adresse, LocalDateTime fraDato, LocalDateTime tilDato, String beskrivelse) {
         this.navn = navn;
@@ -63,6 +64,18 @@ public class Konference {
 
     public void addTilmelding(Tilmelding tilmelding) {
         this.tilmeldte.add(tilmelding);
+    }
+
+    public ArrayList<Udflugt> getUdflugter() {
+        return new ArrayList<>(udflugter);
+    }
+
+    public void addUdflugt(Udflugt udflugt) {
+        udflugter.add(udflugt);
+    }
+
+    public void removeUdflugt(Udflugt udflugt) {
+        udflugter.remove(udflugt);
     }
 
     @Override
