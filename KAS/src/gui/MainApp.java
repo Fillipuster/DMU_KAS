@@ -71,6 +71,7 @@ public class MainApp extends Application {
     private CreateConferenceWindow createConference;
     private JoinConferenceWindow joinconference;
     private ComboBox<Konference> cbKonferencer;
+    private Button btnJoin, btnView, btnCreate;
 
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
@@ -85,16 +86,19 @@ public class MainApp extends Application {
         cbKonferencer.setMinWidth(308);
         pane.add(cbKonferencer, 0, 1, 2, 1);
         controller.updateKonferencerListe();
+        cbKonferencer.setOnAction(event -> controller.cbKonferencerAction());
 
-        Button btnApply = new Button("Tilmeld Konference");
-        pane.add(btnApply, 3, 1);
-        btnApply.setOnAction(event -> controller.btnApplyAction());
+        btnJoin = new Button("Tilmeld Konference");
+        pane.add(btnJoin, 3, 1);
+        btnJoin.setOnAction(event -> controller.btnJoinAction());
+        btnJoin.setDisable(true);
 
-        Button btnView = new Button("Se Konferencedetaljer");
+        btnView = new Button("Se Konferencedetaljer");
         pane.add(btnView, 0, 3);
         btnView.setOnAction(event -> controller.btnViewAction());
+        btnView.setDisable(true);
 
-        Button btnCreate = new Button("Opret Konference");
+        btnCreate = new Button("Opret Konference");
         pane.add(btnCreate, 1, 3);
         btnCreate.setOnAction(event -> controller.btnCreateAction());
 
@@ -116,12 +120,18 @@ public class MainApp extends Application {
             viewConference.showAndWait();
         }
 
-        public void btnApplyAction() {
+        public void btnJoinAction() {
+            joinconference.konference = cbKonferencer.getSelectionModel().getSelectedItem();
             joinconference.showAndWait();
         }
 
         private void updateKonferencerListe() {
             cbKonferencer.getItems().setAll(Service.getKonferencer());
+        }
+
+        private void cbKonferencerAction() {
+            btnJoin.setDisable(false);
+            btnView.setDisable(false);
         }
     }
 
