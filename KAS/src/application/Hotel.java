@@ -1,48 +1,55 @@
 package application;
 
 public class Hotel {
-	private String navn;
-	private String adresse;
-	private double prisEnkelt;
-	private double prisDobbelt;
+    private String navn;
+    private String adresse;
+    private double prisEnkelt;
+    private double prisDobbelt;
 
-	public Hotel(String navn, String adresse, double prisEnkelt, double prisDobbelt) {
-		this.navn = navn;
-		this.adresse = adresse;
-		this.prisEnkelt = prisEnkelt;
-		this.prisDobbelt = prisDobbelt;
-	}
+    public Hotel(String navn, String adresse, double prisEnkelt, double prisDobbelt) {
+        this.navn = navn;
+        this.adresse = adresse;
+        this.prisEnkelt = prisEnkelt;
+        this.prisDobbelt = prisDobbelt;
 
-	public String getNavn() {
-		return navn;
-	}
+        Service.addHotel(this);
+    }
 
-	public void setNavn(String navn) {
-		this.navn = navn;
-	}
+    public String getNavn() {
+        return navn;
+    }
 
-	public String getAdresse() {
-		return adresse;
-	}
+    public void setNavn(String navn) {
+        this.navn = navn;
+    }
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
-	}
+    public String getAdresse() {
+        return adresse;
+    }
 
-	public double getPrisEnkelt() {
-		return prisEnkelt;
-	}
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
 
-	public void setPrisEnkelt(double prisEnkelt) {
-		this.prisEnkelt = prisEnkelt;
-	}
+    public double getPrisEnkelt() {
+        return prisEnkelt;
+    }
 
-	public double getPrisDobbelt() {
-		return prisDobbelt;
-	}
+    public void setPrisEnkelt(double prisEnkelt) {
+        this.prisEnkelt = prisEnkelt;
+    }
 
-	public void setPrisDobbelt(double prisDobbelt) {
-		this.prisDobbelt = prisDobbelt;
-	}
+    public double getPrisDobbelt() {
+        return prisDobbelt;
+    }
+
+    public void setPrisDobbelt(double prisDobbelt) {
+        this.prisDobbelt = prisDobbelt;
+    }
+
+    @Override
+    public String toString() {
+        return navn + "(" + prisEnkelt + "/" + prisDobbelt + ")";
+    }
 
 }
