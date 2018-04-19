@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 //import java.util.Map;
 
 import application.Hotel;
+import application.HotelTillaeg;
 import application.Konference;
 import application.Service;
 import javafx.geometry.Insets;
@@ -48,6 +49,8 @@ public class JoinConferenceWindow extends Stage {
     private Label[] lblPerson = new Label[4];
     private String[] txtLblPerson = { "Fornavn:", "Efternavn:", "Adresse:", "Telefon:" };
     private CheckBox cbLedsager;
+    private ComboBox<Hotel> cboxHotels;
+    private ComboBox<HotelTillaeg> cboxTillaeg;
 
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
@@ -84,12 +87,17 @@ public class JoinConferenceWindow extends Stage {
             p += 2;
         }
 
-        Label lblRubrikHotel = new Label("Vælg hotel:");
+        Label lblRubrikHotel = new Label("Vælg hotel og evt. tillæg:");
         pane.add(lblRubrikHotel, 2, 0);
 
-        ComboBox<Hotel> cboxHotels = new ComboBox<>();
+        cboxHotels = new ComboBox<>();
         cboxHotels.getItems().addAll(Service.getHotels());
-        pane.add(cboxHotels, 2, 1);
+        cboxHotels.setOnAction(event -> cboxHotelsAction());
+        pane.add(cboxHotels, 2, 2);
+
+        cboxTillaeg = new ComboBox<>();
+        cboxTillaeg.setDisable(true);
+        pane.add(cboxTillaeg, 2, 4);
 
         /*
          * Label lblIntro = new Label("Indtast informationer:"); pane.add(lblIntro, 0,
@@ -128,6 +136,11 @@ public class JoinConferenceWindow extends Stage {
          * Button btnAccept = new Button("Tilmeld"); pane.add(btnAccept, 1, 11);
          * btnAccept.setOnAction(event -> btnAcceptAction());
          */
+    }
+
+    private void cboxHotelsAction() {
+        cboxTillaeg.getItems().addAll(cboxHotels.getSelectionModel().getSelectedItem().getHotelTillaeg());
+        cboxTillaeg.setDisable(false);
     }
 
     private void cbLedsagerAction() {
