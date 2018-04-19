@@ -1,6 +1,7 @@
 package gui;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import application.Konference;
@@ -17,6 +18,7 @@ import javafx.stage.StageStyle;
 public class CreateConferenceWindow extends Stage {
 
     public Konference konference;
+    private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     public CreateConferenceWindow(String title, Stage owner) {
         initOwner(owner);
@@ -48,25 +50,25 @@ public class CreateConferenceWindow extends Stage {
         Label lblNavn = new Label("Navn:");
         pane.add(lblNavn, 0, 1);
 
-        txfNavn = new TextField("navn");
+        txfNavn = new TextField("Baconferencen");
         pane.add(txfNavn, 0, 2);
 
         Label lblAdresse = new Label("Adresse:");
         pane.add(lblAdresse, 0, 3);
 
-        txfAdresse = new TextField("adresse");
+        txfAdresse = new TextField("T. Ulipsvej 69, 1337 Baconistan");
         pane.add(txfAdresse, 0, 4);
 
         Label lblFraDato = new Label("Fra Dato:");
         pane.add(lblFraDato, 0, 5);
 
-        txfFraDato = new TextField("fra dato");
+        txfFraDato = new TextField("<dd-MM-yyyy HH:mm>");
         pane.add(txfFraDato, 0, 6);
 
         Label lblTilDato = new Label("Til dato:");
         pane.add(lblTilDato, 0, 7);
 
-        txfTilDato = new TextField("til dato");
+        txfTilDato = new TextField("17-02-2019 15:30");
         pane.add(txfTilDato, 0, 8);
 
         Label lblBeskrivelse = new Label("Beskrivelse:");
@@ -91,9 +93,10 @@ public class CreateConferenceWindow extends Stage {
     private void btnAcceptAction() {
         try {
             konference = new Konference(txfNavn.getText(), txfAdresse.getText(),
-                    LocalDateTime.parse(txfFraDato.getText()), LocalDateTime.parse(txfTilDato.getText()),
-                    txfBeskrivelse.getText());
+                    LocalDateTime.parse(txfFraDato.getText(), timeFormat),
+                    LocalDateTime.parse(txfTilDato.getText(), timeFormat), txfBeskrivelse.getText());
         } catch (DateTimeParseException e) {
+            System.out.println("LocalDateTime parse failed. Using current time.");
             konference = new Konference(txfNavn.getText(), txfAdresse.getText(), LocalDateTime.now(),
                     LocalDateTime.now(), txfBeskrivelse.getText());
         }
