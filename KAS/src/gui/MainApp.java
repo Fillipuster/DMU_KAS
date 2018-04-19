@@ -21,9 +21,13 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         // TEST
+        Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(), LocalDateTime.now(), 120, true);
+        Udflugt u2 = new Udflugt("U2", "bllla", LocalDateTime.now(), LocalDateTime.now(), 202, false);
         @SuppressWarnings("unused")
         Konference _tk0 = new Konference("TestKonference", "TestVej", LocalDateTime.now(), LocalDateTime.now(),
                 "Det er bare en test drenge.");
+        _tk0.addUdflugt(u1);
+        _tk0.addUdflugt(u2);
         @SuppressWarnings("unused")
         Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
                 LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
@@ -33,10 +37,6 @@ public class MainApp extends Application {
         Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
         h.addHotelTillaeg(ht1);
         h.addHotelTillaeg(ht2);
-        // Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(),
-        // LocalDateTime.now(), 120, true);
-        // Udflugt u2 = new Udflugt("U2", "bllla", LocalDateTime.now(),
-        // LocalDateTime.now(), 202, false);
         //
         // Person p1 = new Person("Jonas", "Berg", "Whatever", "288713");
         // Person p2 = new Person("Daniel", "Præstegaard", "Gah", "923884");
