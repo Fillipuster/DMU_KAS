@@ -27,9 +27,8 @@ public class MainApp extends Application {
         @SuppressWarnings("unused")
         Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
                 LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
-        Application.launch(args);
 
-        // Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
+        Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
         // HotelTillaeg ht = new HotelTillaeg("Wifi", 9001);
         // Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(),
         // LocalDateTime.now(), 120, true);
@@ -47,6 +46,8 @@ public class MainApp extends Application {
         //
         // System.out.println(t.totalPrice());
         // System.out.println(200 + 9001 + 202);
+
+        Application.launch(args);
     }
 
     @Override
