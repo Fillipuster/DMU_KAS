@@ -9,12 +9,15 @@ import application.Konference;
 import application.Service;
 import application.Tilmelding;
 import application.Person;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -50,6 +53,7 @@ public class JoinConferenceWindow extends Stage {
     private CheckBox cbLedsager;
     private ComboBox<Hotel> cboxHotels;
     private ComboBox<HotelTillaeg> cboxTillaeg;
+    private ListView<HotelTillaeg> lvwTillaeg;
 
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
@@ -89,14 +93,38 @@ public class JoinConferenceWindow extends Stage {
         Label lblRubrikHotel = new Label("Vælg hotel og evt. tillæg:");
         pane.add(lblRubrikHotel, 2, 0);
 
+        Label lblHotel = new Label("Hotel:");
+        pane.add(lblHotel, 2, 1);
+
         cboxHotels = new ComboBox<>();
         cboxHotels.getItems().addAll(Service.getHotels());
         cboxHotels.setOnAction(event -> cboxHotelsAction());
         pane.add(cboxHotels, 2, 2);
 
+        Label lblTillaeg = new Label("Hotel Tillæg:");
+        pane.add(lblTillaeg, 2, 3);
+
         cboxTillaeg = new ComboBox<>();
         cboxTillaeg.setDisable(true);
+        cboxTillaeg.setOnAction(event -> cboxTillaegAction());
         pane.add(cboxTillaeg, 2, 4);
+
+        Label lblTillaegList = new Label("Valgte Tillæg:");
+        pane.add(lblTillaegList, 2, 5);
+
+        lvwTillaeg = new ListView<>();
+        lvwTillaeg.setDisable(true);
+        lvwTillaeg.setMaxHeight(200);
+        pane.add(lvwTillaeg, 2, 6, 1, 6);
+
+        Button btnRemoveFromLvw = new Button("Slet");
+        btnRemoveFromLvw.setOnAction(event -> btnRemoveFromLvwAction());
+        pane.add(btnRemoveFromLvw, 3, 6);
+
+        // Add an event listener to our ListView:
+        // ChangeListener<HotelTillaeg> listener = (observable, oldValue, newValue) ->
+        // lvwTillaegItemSelected();
+        // lvwTillaeg.getSelectionModel().selectedItemProperty().addListener(listener);
 
         Button btnCancel = new Button("Luk");
         pane.add(btnCancel, 0, 11);
@@ -106,6 +134,10 @@ public class JoinConferenceWindow extends Stage {
         pane.add(btnAccept, 1, 11);
         btnAccept.setOnAction(event -> btnAcceptAction());
 
+    }
+
+    private void btnRemoveFromLvwAction() {
+        lvwTillaeg.getItems().remove(lvwTillaeg.getSelectionModel().getSelectedItem());
     }
 
     private void cboxHotelsAction() {
@@ -138,6 +170,14 @@ public class JoinConferenceWindow extends Stage {
         Tilmelding tilmelding = new Tilmelding(konference, LocalDate.now(), LocalDate.now(), deltager, ledsager);
 
         hide();
+    }
+
+    private void cboxTillaegAction() {
+        lvwTillaeg.setDisable(false);
+        if (!lvwTillaeg.getItems().contains(cboxTillaeg.getSelectionModel().getSelectedItem())) {
+            lvwTillaeg.getItems().add(cboxTillaeg.getSelectionModel().getSelectedItem());
+        }
+        // cboxTillaeg.getSelectionModel().clearSelection(); // Causes problems?
     }
 
     private void btnCancelAction() {
