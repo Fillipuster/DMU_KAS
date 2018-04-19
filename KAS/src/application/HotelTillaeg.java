@@ -25,4 +25,9 @@ public class HotelTillaeg {
         this.pris = pris;
     }
 
+    @Override
+    public String toString() {
+        return navn + " (" + pris + ")";
+    }
+
 }
