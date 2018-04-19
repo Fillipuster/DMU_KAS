@@ -22,7 +22,7 @@ public class CreateConferenceWindow extends Stage {
 
     public CreateConferenceWindow(String title, Stage owner) {
         initOwner(owner);
-        initStyle(StageStyle.UTILITY);
+        initStyle(StageStyle.DECORATED);
         initModality(Modality.APPLICATION_MODAL);
         setMinHeight(100);
         setMinWidth(200);
@@ -74,7 +74,7 @@ public class CreateConferenceWindow extends Stage {
         Label lblBeskrivelse = new Label("Beskrivelse:");
         pane.add(lblBeskrivelse, 0, 9);
 
-        txfBeskrivelse = new TextField("beskrivelse");
+        txfBeskrivelse = new TextField("En konference omkring bacon.");
         pane.add(txfBeskrivelse, 0, 10);
 
         Button btnCancel = new Button("Luk");
