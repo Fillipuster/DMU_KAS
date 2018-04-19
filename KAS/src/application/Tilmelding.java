@@ -12,7 +12,6 @@ public class Tilmelding {
     private Hotel hotel;
     private ArrayList<Udflugt> udflugter = new ArrayList<>();
     private ArrayList<HotelTillaeg> hotelTillaeg = new ArrayList<>();
-    private String test;
 
     public Tilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato, Person deltager,
             Person ledsager) {
@@ -95,19 +94,21 @@ public class Tilmelding {
     }
 
     public double totalPrice() {
-        double totalPrice = 0;
+        double total = 0;
         if (hotel != null) {
             if (ledsager != null) {
-                totalPrice += hotel.getPrisDobbelt();
+                total += hotel.getPrisDobbelt();
             } else {
-                totalPrice += hotel.getPrisEnkelt();
+                total += hotel.getPrisEnkelt();
             }
-            for (int i = 0; i < hotelTillaeg.size(); i++) {
-                totalPrice += this.hotelTillaeg.get(i).getPris();
-                totalPrice += this.udflugter.get(i).getPris();
+            for (HotelTillaeg ht : hotelTillaeg) {
+                total += ht.getPris();
             }
         }
-        return totalPrice;
+        for (Udflugt u : udflugter) {
+            total += u.getPris();
+        }
+        return total;
     }
 
 }

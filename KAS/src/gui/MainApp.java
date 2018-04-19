@@ -1,9 +1,15 @@
 package gui;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import application.Hotel;
+import application.HotelTillaeg;
 import application.Konference;
+import application.Person;
 import application.Service;
+import application.Tilmelding;
+import application.Udflugt;
 import javafx.application.Application;
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -22,6 +28,25 @@ public class MainApp extends Application {
         Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
                 LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
         Application.launch(args);
+
+        // Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
+        // HotelTillaeg ht = new HotelTillaeg("Wifi", 9001);
+        // Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(),
+        // LocalDateTime.now(), 120, true);
+        // Udflugt u2 = new Udflugt("U2", "bllla", LocalDateTime.now(),
+        // LocalDateTime.now(), 202, false);
+        //
+        // Person p1 = new Person("Jonas", "Berg", "Whatever", "288713");
+        // Person p2 = new Person("Daniel", "Præstegaard", "Gah", "923884");
+        //
+        // Tilmelding t = new Tilmelding(_tk1, LocalDate.now(), LocalDate.now(), p1);
+        // t.setLedsager(p2);
+        // t.addUdflugt(u2);
+        // t.setHotel(h);
+        // t.addTillaeg(ht);
+        //
+        // System.out.println(t.totalPrice());
+        // System.out.println(200 + 9001 + 202);
     }
 
     @Override
@@ -32,6 +57,7 @@ public class MainApp extends Application {
 
         viewConference = new ViewConferenceWindow("Konferencevisning", stage);
         createConference = new CreateConferenceWindow("Opret Konference", stage);
+        joinconference = new JoinConferenceWindow("Tilmeld Konference", stage);
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -41,6 +67,7 @@ public class MainApp extends Application {
     private final Controller controller = new Controller();
     private ViewConferenceWindow viewConference;
     private CreateConferenceWindow createConference;
+    private JoinConferenceWindow joinconference;
     private ComboBox<Konference> cbKonferencer;
 
     private void initContent(GridPane pane) {
@@ -88,7 +115,7 @@ public class MainApp extends Application {
         }
 
         public void btnApplyAction() {
-            // User presses the "apply to conference" button.
+            joinconference.showAndWait();
         }
 
         private void updateKonferencerListe() {

@@ -17,7 +17,7 @@ import javafx.stage.StageStyle;
 
 public class CreateConferenceWindow extends Stage {
 
-    public Konference konference;
+    protected Konference konference;
     private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     public CreateConferenceWindow(String title, Stage owner) {
