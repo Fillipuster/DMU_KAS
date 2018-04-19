@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import application.Konference;
 import application.Person;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -86,7 +85,6 @@ public class JoinConferenceWindow extends Stage {
 		Button btnAccept = new Button("Tilmeld");
 		pane.add(btnAccept, 1, 11);
 		btnAccept.setOnAction(event -> btnAcceptAction());
-		btnAccept.setAlignment(Pos.CENTER_RIGHT);
 	}
 
 	private void cbLedsagerAction() {
