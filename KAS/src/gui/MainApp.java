@@ -28,8 +28,9 @@ public class MainApp extends Application {
         Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
                 LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
 
+        HotelTillaeg ht = new HotelTillaeg("Wifi", 50);
         Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
-        // HotelTillaeg ht = new HotelTillaeg("Wifi", 9001);
+        h.addHotelTillaeg(ht);
         // Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(),
         // LocalDateTime.now(), 120, true);
         // Udflugt u2 = new Udflugt("U2", "bllla", LocalDateTime.now(),
