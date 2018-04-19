@@ -8,6 +8,7 @@ import application.HotelTillaeg;
 import application.Konference;
 import application.Service;
 import application.Tilmelding;
+import application.Udflugt;
 import application.Person;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -54,12 +55,17 @@ public class JoinConferenceWindow extends Stage {
     private ComboBox<Hotel> cboxHotels;
     private ComboBox<HotelTillaeg> cboxTillaeg;
     private ListView<HotelTillaeg> lvwTillaeg;
+    private ComboBox<Udflugt> cboxUdflugter;
+    private ListView<Udflugt> lvwUdflugter;
 
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
         pane.setPadding(new Insets(20));
         pane.setHgap(10);
         pane.setVgap(10);
+
+        // Column #1
+        // TODO: Tilføj pris i alt.
 
         Label lblRubrikDeltager = new Label("Indtast informationer (deltager):");
         pane.add(lblRubrikDeltager, 0, 0);
@@ -73,6 +79,23 @@ public class JoinConferenceWindow extends Stage {
             o += 2;
         }
 
+        Label lblHotel = new Label("Hotel:");
+        pane.add(lblHotel, 0, 10);
+
+        cboxHotels = new ComboBox<>();
+        cboxHotels.getItems().addAll(Service.getHotels());
+        cboxHotels.setOnAction(event -> cboxHotelsAction());
+        pane.add(cboxHotels, 0, 11);
+
+        cbLedsager = new CheckBox("Medbringer ledsager?");
+        cbLedsager.setOnAction(event -> cbLedsagerAction());
+        pane.add(cbLedsager, 0, 12);
+
+        // Column #2
+
+        Label lblRubrikLedsager = new Label("Indtast informationer (ledsager):");
+        pane.add(lblRubrikLedsager, 1, 0);
+
         o = 1;
         for (int i = 0; i < 4; i++) {
             lblPerson[i] = new Label(txtLblPerson[i]);
@@ -83,61 +106,72 @@ public class JoinConferenceWindow extends Stage {
             o += 2;
         }
 
-        cbLedsager = new CheckBox("Medbringer ledsager?");
-        cbLedsager.setOnAction(event -> cbLedsagerAction());
-        pane.add(cbLedsager, 0, 10);
+        // Column #3
 
-        Label lblRubrikLedsager = new Label("Indtast informationer (ledsager):");
-        pane.add(lblRubrikLedsager, 1, 0);
-
-        Label lblRubrikHotel = new Label("Vælg hotel og evt. tillæg:");
+        Label lblRubrikHotel = new Label("Vælg hotel-tillæg:");
         pane.add(lblRubrikHotel, 2, 0);
 
-        Label lblHotel = new Label("Hotel:");
-        pane.add(lblHotel, 2, 1);
-
-        cboxHotels = new ComboBox<>();
-        cboxHotels.getItems().addAll(Service.getHotels());
-        cboxHotels.setOnAction(event -> cboxHotelsAction());
-        pane.add(cboxHotels, 2, 2);
-
-        Label lblTillaeg = new Label("Hotel Tillæg:");
-        pane.add(lblTillaeg, 2, 3);
+        Label lblHotelTillaeg = new Label("Mulige tillæg:");
+        pane.add(lblHotelTillaeg, 2, 1);
 
         cboxTillaeg = new ComboBox<>();
         cboxTillaeg.setDisable(true);
         cboxTillaeg.setOnAction(event -> cboxTillaegAction());
-        pane.add(cboxTillaeg, 2, 4);
+        pane.add(cboxTillaeg, 2, 2);
 
         Label lblTillaegList = new Label("Valgte Tillæg:");
-        pane.add(lblTillaegList, 2, 5);
+        pane.add(lblTillaegList, 2, 3);
 
         lvwTillaeg = new ListView<>();
         lvwTillaeg.setDisable(true);
         lvwTillaeg.setMaxHeight(200);
-        pane.add(lvwTillaeg, 2, 6, 1, 6);
+        pane.add(lvwTillaeg, 2, 4, 1, 8);
 
-        Button btnRemoveFromLvw = new Button("Slet");
-        btnRemoveFromLvw.setOnAction(event -> btnRemoveFromLvwAction());
-        pane.add(btnRemoveFromLvw, 3, 6);
+        Button btnRemoveTilaeg = new Button("Slet");
+        btnRemoveTilaeg.setOnAction(event -> btnRemoveTilaegAction());
+        pane.add(btnRemoveTilaeg, 2, 12);
 
-        // Add an event listener to our ListView:
-        // ChangeListener<HotelTillaeg> listener = (observable, oldValue, newValue) ->
-        // lvwTillaegItemSelected();
-        // lvwTillaeg.getSelectionModel().selectedItemProperty().addListener(listener);
+        // Column #4
+
+        Label lblRubrikUdflugt = new Label("Vælg ledsager-udflugter:");
+        pane.add(lblRubrikUdflugt, 3, 0);
+
+        Label lblUdflugter = new Label("Mulige udflugter:");
+        pane.add(lblUdflugter, 3, 1);
+
+        cboxUdflugter = new ComboBox<>();
+        cboxUdflugter.setDisable(true);
+        cboxUdflugter.setOnAction(event -> cboxUdflugterAction());
+        pane.add(cboxUdflugter, 3, 2);
+
+        lvwUdflugter = new ListView<>();
+        lvwUdflugter = new ListView<>();
+        lvwUdflugter.setDisable(true);
+        lvwUdflugter.setMaxHeight(200);
+        pane.add(lvwUdflugter, 3, 4, 1, 8);
+
+        Button btnRemoveUdflugt = new Button("Slet");
+        btnRemoveUdflugt.setOnAction(event -> btnRemoveUdflugtAction());
+        pane.add(btnRemoveUdflugt, 3, 12);
+
+        // Buttons
 
         Button btnCancel = new Button("Luk");
-        pane.add(btnCancel, 0, 11);
+        pane.add(btnCancel, 0, 13);
         btnCancel.setOnAction(event -> btnCancelAction());
 
         Button btnAccept = new Button("Tilmeld");
-        pane.add(btnAccept, 1, 11);
+        pane.add(btnAccept, 1, 13);
         btnAccept.setOnAction(event -> btnAcceptAction());
 
     }
 
-    private void btnRemoveFromLvwAction() {
+    private void btnRemoveTilaegAction() {
         lvwTillaeg.getItems().remove(lvwTillaeg.getSelectionModel().getSelectedItem());
+    }
+
+    private void btnRemoveUdflugtAction() {
+        lvwUdflugter.getItems().remove(lvwUdflugter.getSelectionModel().getSelectedItem());
     }
 
     private void cboxHotelsAction() {
@@ -146,13 +180,19 @@ public class JoinConferenceWindow extends Stage {
     }
 
     private void cbLedsagerAction() {
+        cboxUdflugter.getItems().addAll(konference.getUdflugter());
+
         if (cbLedsager.isSelected()) {
             for (TextField tf : txfLedsager) {
                 tf.setDisable(false);
+                lvwUdflugter.setDisable(false);
+                cboxUdflugter.setDisable(false);
             }
         } else {
             for (TextField tf : txfLedsager) {
                 tf.setDisable(true);
+                lvwUdflugter.setDisable(true);
+                cboxUdflugter.setDisable(true);
             }
         }
     }
@@ -178,6 +218,13 @@ public class JoinConferenceWindow extends Stage {
             lvwTillaeg.getItems().add(cboxTillaeg.getSelectionModel().getSelectedItem());
         }
         // cboxTillaeg.getSelectionModel().clearSelection(); // Causes problems?
+    }
+
+    private void cboxUdflugterAction() {
+        lvwUdflugter.setDisable(false);
+        if (!lvwUdflugter.getItems().contains(cboxUdflugter.getSelectionModel().getSelectedItem())) {
+            lvwUdflugter.getItems().add(cboxUdflugter.getSelectionModel().getSelectedItem());
+        }
     }
 
     private void btnCancelAction() {
