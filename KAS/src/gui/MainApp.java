@@ -1,6 +1,5 @@
 package gui;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import application.Hotel;
@@ -55,13 +54,14 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("KAS");
+        stage.setTitle("Konference Administrations System");
         GridPane pane = new GridPane();
         initContent(pane);
 
         viewConference = new ViewConferenceWindow("Konferencevisning", stage);
         createConference = new CreateConferenceWindow("Opret Konference", stage);
         joinconference = new JoinConferenceWindow("Tilmeld Konference", stage);
+        cp = new ConfirmPopup("TestTitle", stage, "TestLabel");
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -75,13 +75,16 @@ public class MainApp extends Application {
     private ComboBox<Konference> cbKonferencer;
     private Button btnJoin, btnView, btnCreate;
 
+    // TEST
+    private ConfirmPopup cp;
+
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
         pane.setPadding(new Insets(20));
         pane.setHgap(10);
         pane.setVgap(10);
 
-        Label lblTitle = new Label("Konference Administrations System");
+        Label lblTitle = new Label("Vælg konference:");
         pane.add(lblTitle, 0, 0);
 
         cbKonferencer = new ComboBox<>();
@@ -118,8 +121,9 @@ public class MainApp extends Application {
         }
 
         public void btnViewAction() {
-            viewConference.setStageTitle(cbKonferencer.getSelectionModel().getSelectedItem().getNavn());
-            viewConference.showAndWait();
+            // viewConference.setStageTitle(cbKonferencer.getSelectionModel().getSelectedItem().getNavn());
+            // viewConference.showAndWait();
+            cp.showAndWait();
         }
 
         public void btnJoinAction() {
