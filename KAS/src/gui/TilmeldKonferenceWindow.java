@@ -22,14 +22,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class JoinConferenceWindow extends Stage {
+public class TilmeldKonferenceWindow extends Stage {
 
 	protected Konference konference;
 
 	private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	private ConfirmPopup confirm;
 
-	public JoinConferenceWindow(String title, Stage owner) {
+	public TilmeldKonferenceWindow(String title, Stage owner) {
 		initOwner(owner);
 		initStyle(StageStyle.DECORATED);
 		initModality(Modality.APPLICATION_MODAL);

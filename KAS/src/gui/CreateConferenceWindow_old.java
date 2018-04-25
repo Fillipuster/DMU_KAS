@@ -15,11 +15,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class CreateConferenceWindow extends Stage {
+public class CreateConferenceWindow_old extends Stage {
 
     protected Konference konference;
 
-    public CreateConferenceWindow(String title, Stage owner) {
+    public CreateConferenceWindow_old(String title, Stage owner) {
         initOwner(owner);
         initStyle(StageStyle.DECORATED);
         initModality(Modality.APPLICATION_MODAL);

@@ -18,11 +18,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class ViewConferenceWindow extends Stage {
+public class ViewConferenceWindow_old extends Stage {
 
     private Konference konference;
 
-    public ViewConferenceWindow(String title, Stage owner) {
+    public ViewConferenceWindow_old(String title, Stage owner) {
         initOwner(owner);
         initStyle(StageStyle.DECORATED);
         initModality(Modality.APPLICATION_MODAL);

@@ -54,9 +54,9 @@ public class MainApp extends Application {
 		GridPane pane = new GridPane();
 		initContent(pane);
 
-		viewConference = new ViewConferenceWindow("Konferencevisning", stage);
-		createConference = new CreateConferenceWindow("Opret Konference", stage);
-		joinconference = new JoinConferenceWindow("Tilmeld Konference", stage);
+		viewConference = new ViewConferenceWindow_old("Konferencevisning", stage);
+		createConference = new CreateConferenceWindow_old("Opret Konference", stage);
+		joinconference = new TilmeldKonferenceWindow("Tilmeld Konference", stage);
 
 		Scene scene = new Scene(pane);
 		stage.setScene(scene);
@@ -64,9 +64,9 @@ public class MainApp extends Application {
 	}
 
 	private final Controller controller = new Controller();
-	private ViewConferenceWindow viewConference;
-	private CreateConferenceWindow createConference;
-	private JoinConferenceWindow joinconference;
+	private ViewConferenceWindow_old viewConference;
+	private CreateConferenceWindow_old createConference;
+	private TilmeldKonferenceWindow joinconference;
 	private ComboBox<Konference> cbKonferencer;
 	private Button btnJoin, btnView, btnCreate;
 
