@@ -12,7 +12,6 @@ public class Service {
 
 	public static void addKonference(Konference konference) {
 		konferencer.add(konference);
-		System.out.println("Tilføjet");
 	}
 
 	public static ArrayList<Konference> getKonferencer() {
@@ -45,7 +44,7 @@ public class Service {
 		Konference k = new Konference(navn, adresse, fraDato, tilDato, beskrivelse);
 		addKonference(k);
 		return k;
-		
+
 	}
 
 	public static void createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
