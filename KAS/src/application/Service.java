@@ -38,7 +38,6 @@ public class Service {
 
 	}
 
-	// * Not needed?
 	public static void createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
 		Person p = new Person(fornavn, efternavn, adresse, telefonNr);
 	}
@@ -48,5 +47,11 @@ public class Service {
 		Udflugt u = new Udflugt(navn, beskrivelse, fraTid, tilTid, pris, frokost);
 		konference.addUdflugt(u);
 		return u;
+	}
+
+	public static HotelTillaeg createHotelTillaeg(Hotel hotel, String navn, double pris) {
+		HotelTillaeg ht = new HotelTillaeg(navn, pris);
+		hotel.addHotelTillaeg(ht);
+		return ht;
 	}
 }
