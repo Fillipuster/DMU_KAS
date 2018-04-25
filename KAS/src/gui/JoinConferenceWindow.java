@@ -6,12 +6,9 @@ import java.time.format.DateTimeFormatter;
 import application.Hotel;
 import application.HotelTillaeg;
 import application.Konference;
-import application.Service;
-import application.Tilmelding;
-import application.Udflugt;
 import application.Person;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import application.Service;
+import application.Udflugt;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,257 +24,258 @@ import javafx.stage.StageStyle;
 
 public class JoinConferenceWindow extends Stage {
 
-    protected Konference konference;
+	protected Konference konference;
 
-    private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    private ConfirmPopup confirm;
+	private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+	private ConfirmPopup confirm;
 
-    public JoinConferenceWindow(String title, Stage owner) {
-        initOwner(owner);
-        initStyle(StageStyle.DECORATED);
-        initModality(Modality.APPLICATION_MODAL);
-        setMinHeight(100);
-        setMinWidth(200);
-        setResizable(false);
+	public JoinConferenceWindow(String title, Stage owner) {
+		initOwner(owner);
+		initStyle(StageStyle.DECORATED);
+		initModality(Modality.APPLICATION_MODAL);
+		setMinHeight(100);
+		setMinWidth(200);
+		setResizable(false);
 
-        confirm = new ConfirmPopup("Accepter Tilmelding", owner,
-                "Er du sikker på at du vil\ntilmelde dig konferencen?");
+		confirm = new ConfirmPopup("Accepter Tilmelding", owner,
+				"Er du sikker på at du vil\ntilmelde dig konferencen?");
 
-        setTitle(title);
-        GridPane pane = new GridPane();
-        initContent(pane);
+		setTitle(title);
+		GridPane pane = new GridPane();
+		initContent(pane);
 
-        Scene scene = new Scene(pane);
-        setScene(scene);
-    }
+		Scene scene = new Scene(pane);
+		setScene(scene);
+	}
 
-    private TextField[] txfDeltager = new TextField[4];
-    private TextField[] txfLedsager = new TextField[4];
-    private String[] txtTxfPerson = { "John", "Doe", "Lupinvej 24", "12345678" };
-    private Label[] lblPerson = new Label[4];
-    private String[] txtLblPerson = { "Fornavn:", "Efternavn:", "Adresse:", "Telefon:" };
-    private CheckBox cbLedsager;
-    private ComboBox<Hotel> cboxHotels;
-    private ComboBox<HotelTillaeg> cboxTillaeg;
-    private ListView<HotelTillaeg> lvwTillaeg;
-    private ComboBox<Udflugt> cboxUdflugter;
-    private ListView<Udflugt> lvwUdflugter;
-    private Label lblTotalPrice;
+	private TextField[] txfDeltager = new TextField[4];
+	private TextField[] txfLedsager = new TextField[4];
+	private String[] txtTxfPerson = { "John", "Doe", "Lupinvej 24", "12345678" };
+	private Label[] lblPerson = new Label[4];
+	private String[] txtLblPerson = { "Fornavn:", "Efternavn:", "Adresse:", "Telefon:" };
+	private CheckBox cbLedsager;
+	private ComboBox<Hotel> cboxHotels;
+	private ComboBox<HotelTillaeg> cboxTillaeg;
+	private ListView<HotelTillaeg> lvwTillaeg;
+	private ComboBox<Udflugt> cboxUdflugter;
+	private ListView<Udflugt> lvwUdflugter;
+	private Label lblTotalPrice;
 
-    private void initContent(GridPane pane) {
-        pane.setGridLinesVisible(false);
-        pane.setPadding(new Insets(20));
-        pane.setHgap(10);
-        pane.setVgap(10);
+	private void initContent(GridPane pane) {
+		pane.setGridLinesVisible(false);
+		pane.setPadding(new Insets(20));
+		pane.setHgap(10);
+		pane.setVgap(10);
 
-        // Column #1
-        // TODO: Tilføj pris i alt.
+		// Column #1
+		// TODO: Tilføj pris i alt.
 
-        Label lblRubrikDeltager = new Label("Indtast informationer (deltager):");
-        pane.add(lblRubrikDeltager, 0, 0);
+		Label lblRubrikDeltager = new Label("Indtast informationer (deltager):");
+		pane.add(lblRubrikDeltager, 0, 0);
 
-        int o = 1;
-        for (int i = 0; i < 4; i++) {
-            lblPerson[i] = new Label(txtLblPerson[i]);
-            pane.add(lblPerson[i], 0, o);
-            txfDeltager[i] = new TextField(txtTxfPerson[i]);
-            pane.add(txfDeltager[i], 0, o + 1);
-            o += 2;
-        }
+		int o = 1;
+		for (int i = 0; i < 4; i++) {
+			lblPerson[i] = new Label(txtLblPerson[i]);
+			pane.add(lblPerson[i], 0, o);
+			txfDeltager[i] = new TextField(txtTxfPerson[i]);
+			pane.add(txfDeltager[i], 0, o + 1);
+			o += 2;
+		}
 
-        Label lblHotel = new Label("Hotel:");
-        pane.add(lblHotel, 0, 10);
+		Label lblHotel = new Label("Hotel:");
+		pane.add(lblHotel, 0, 10);
 
-        cboxHotels = new ComboBox<>();
-        cboxHotels.getItems().addAll(Service.getHotels());
-        cboxHotels.setOnAction(event -> cboxHotelsAction());
-        pane.add(cboxHotels, 0, 11);
+		cboxHotels = new ComboBox<>();
+		cboxHotels.getItems().addAll(Service.getHotels());
+		cboxHotels.setOnAction(event -> cboxHotelsAction());
+		pane.add(cboxHotels, 0, 11);
 
-        cbLedsager = new CheckBox("Medbringer ledsager?");
-        cbLedsager.setOnAction(event -> cbLedsagerAction());
-        pane.add(cbLedsager, 0, 12);
+		cbLedsager = new CheckBox("Medbringer ledsager?");
+		cbLedsager.setOnAction(event -> cbLedsagerAction());
+		pane.add(cbLedsager, 0, 12);
 
-        // Column #2
+		// Column #2
 
-        Label lblRubrikLedsager = new Label("Indtast informationer (ledsager):");
-        pane.add(lblRubrikLedsager, 1, 0);
+		Label lblRubrikLedsager = new Label("Indtast informationer (ledsager):");
+		pane.add(lblRubrikLedsager, 1, 0);
 
-        o = 1;
-        for (int i = 0; i < 4; i++) {
-            lblPerson[i] = new Label(txtLblPerson[i]);
-            pane.add(lblPerson[i], 1, o);
-            txfLedsager[i] = new TextField(txtTxfPerson[i]);
-            pane.add(txfLedsager[i], 1, o + 1);
-            txfLedsager[i].setDisable(true);
-            o += 2;
-        }
+		o = 1;
+		for (int i = 0; i < 4; i++) {
+			lblPerson[i] = new Label(txtLblPerson[i]);
+			pane.add(lblPerson[i], 1, o);
+			txfLedsager[i] = new TextField(txtTxfPerson[i]);
+			pane.add(txfLedsager[i], 1, o + 1);
+			txfLedsager[i].setDisable(true);
+			o += 2;
+		}
 
-        // Column #3
+		// Column #3
 
-        Label lblRubrikHotel = new Label("Vælg hotel-tillæg:");
-        pane.add(lblRubrikHotel, 2, 0);
+		Label lblRubrikHotel = new Label("Vælg hotel-tillæg:");
+		pane.add(lblRubrikHotel, 2, 0);
 
-        Label lblHotelTillaeg = new Label("Mulige tillæg:");
-        pane.add(lblHotelTillaeg, 2, 1);
+		Label lblHotelTillaeg = new Label("Mulige tillæg:");
+		pane.add(lblHotelTillaeg, 2, 1);
 
-        cboxTillaeg = new ComboBox<>();
-        cboxTillaeg.setDisable(true);
-        cboxTillaeg.setOnAction(event -> cboxTillaegAction());
-        pane.add(cboxTillaeg, 2, 2);
+		cboxTillaeg = new ComboBox<>();
+		cboxTillaeg.setDisable(true);
+		cboxTillaeg.setOnAction(event -> cboxTillaegAction());
+		pane.add(cboxTillaeg, 2, 2);
 
-        Label lblTillaegList = new Label("Valgte Tillæg:");
-        pane.add(lblTillaegList, 2, 3);
+		Label lblTillaegList = new Label("Valgte Tillæg:");
+		pane.add(lblTillaegList, 2, 3);
 
-        lvwTillaeg = new ListView<>();
-        lvwTillaeg.setDisable(true);
-        lvwTillaeg.setMaxHeight(200);
-        pane.add(lvwTillaeg, 2, 4, 1, 8);
+		lvwTillaeg = new ListView<>();
+		lvwTillaeg.setDisable(true);
+		lvwTillaeg.setMaxHeight(200);
+		pane.add(lvwTillaeg, 2, 4, 1, 8);
 
-        Button btnRemoveTilaeg = new Button("Slet");
-        btnRemoveTilaeg.setOnAction(event -> btnRemoveTilaegAction());
-        pane.add(btnRemoveTilaeg, 2, 12);
+		Button btnRemoveTilaeg = new Button("Slet");
+		btnRemoveTilaeg.setOnAction(event -> btnRemoveTilaegAction());
+		pane.add(btnRemoveTilaeg, 2, 12);
 
-        // Column #4
+		// Column #4
 
-        Label lblRubrikUdflugt = new Label("Vælg ledsager-udflugter:");
-        pane.add(lblRubrikUdflugt, 3, 0);
+		Label lblRubrikUdflugt = new Label("Vælg ledsager-udflugter:");
+		pane.add(lblRubrikUdflugt, 3, 0);
 
-        Label lblUdflugter = new Label("Mulige udflugter:");
-        pane.add(lblUdflugter, 3, 1);
+		Label lblUdflugter = new Label("Mulige udflugter:");
+		pane.add(lblUdflugter, 3, 1);
 
-        cboxUdflugter = new ComboBox<>();
-        cboxUdflugter.setDisable(true);
-        cboxUdflugter.setOnAction(event -> cboxUdflugterAction());
-        pane.add(cboxUdflugter, 3, 2);
+		cboxUdflugter = new ComboBox<>();
+		cboxUdflugter.setDisable(true);
+		cboxUdflugter.setOnAction(event -> cboxUdflugterAction());
+		pane.add(cboxUdflugter, 3, 2);
 
-        lvwUdflugter = new ListView<>();
-        lvwUdflugter = new ListView<>();
-        lvwUdflugter.setDisable(true);
-        lvwUdflugter.setMaxHeight(200);
-        pane.add(lvwUdflugter, 3, 4, 1, 8);
+		lvwUdflugter = new ListView<>();
+		lvwUdflugter = new ListView<>();
+		lvwUdflugter.setDisable(true);
+		lvwUdflugter.setMaxHeight(200);
+		pane.add(lvwUdflugter, 3, 4, 1, 8);
 
-        Button btnRemoveUdflugt = new Button("Slet");
-        btnRemoveUdflugt.setOnAction(event -> btnRemoveUdflugtAction());
-        pane.add(btnRemoveUdflugt, 3, 12);
+		Button btnRemoveUdflugt = new Button("Slet");
+		btnRemoveUdflugt.setOnAction(event -> btnRemoveUdflugtAction());
+		pane.add(btnRemoveUdflugt, 3, 12);
 
-        // Buttons
+		// Buttons
 
-        Button btnCancel = new Button("Luk");
-        pane.add(btnCancel, 0, 13);
-        btnCancel.setOnAction(event -> btnCancelAction());
+		Button btnCancel = new Button("Luk");
+		pane.add(btnCancel, 0, 13);
+		btnCancel.setOnAction(event -> btnCancelAction());
 
-        Button btnAccept = new Button("Tilmeld");
-        pane.add(btnAccept, 1, 13);
-        btnAccept.setOnAction(event -> btnAcceptAction());
+		Button btnAccept = new Button("Tilmeld");
+		pane.add(btnAccept, 1, 13);
+		btnAccept.setOnAction(event -> btnAcceptAction());
 
-        // Total Price Label
-        lblTotalPrice = new Label("TOTAL: 0.0");
-        pane.add(lblTotalPrice, 3, 13);
+		// Total Price Label
+		lblTotalPrice = new Label("TOTAL: 0.0");
+		pane.add(lblTotalPrice, 3, 13);
 
-    }
+	}
 
-    private void btnRemoveTilaegAction() {
-        lvwTillaeg.getItems().remove(lvwTillaeg.getSelectionModel().getSelectedItem());
+	private void btnRemoveTilaegAction() {
+		lvwTillaeg.getItems().remove(lvwTillaeg.getSelectionModel().getSelectedItem());
 
-        updateTotalPrice();
-    }
+		updateTotalPrice();
+	}
 
-    private void btnRemoveUdflugtAction() {
-        lvwUdflugter.getItems().remove(lvwUdflugter.getSelectionModel().getSelectedItem());
+	private void btnRemoveUdflugtAction() {
+		lvwUdflugter.getItems().remove(lvwUdflugter.getSelectionModel().getSelectedItem());
 
-        updateTotalPrice();
-    }
+		updateTotalPrice();
+	}
 
-    private void cboxHotelsAction() {
-        cboxTillaeg.getItems().addAll(cboxHotels.getSelectionModel().getSelectedItem().getHotelTillaeg());
-        cboxTillaeg.setDisable(false);
+	private void cboxHotelsAction() {
+		cboxTillaeg.getItems().addAll(cboxHotels.getSelectionModel().getSelectedItem().getHotelTillaeg());
+		cboxTillaeg.setDisable(false);
 
-        updateTotalPrice();
-    }
+		updateTotalPrice();
+	}
 
-    private void cbLedsagerAction() {
-        cboxUdflugter.getItems().addAll(konference.getUdflugter());
+	private void cbLedsagerAction() {
+		cboxUdflugter.getItems().addAll(konference.getUdflugter());
 
-        if (cbLedsager.isSelected()) {
-            for (TextField tf : txfLedsager) {
-                tf.setDisable(false);
-                lvwUdflugter.setDisable(false);
-                cboxUdflugter.setDisable(false);
-            }
-        } else {
-            for (TextField tf : txfLedsager) {
-                tf.setDisable(true);
-                lvwUdflugter.setDisable(true);
-                cboxUdflugter.setDisable(true);
-            }
-        }
+		if (cbLedsager.isSelected()) {
+			for (TextField tf : txfLedsager) {
+				tf.setDisable(false);
+				lvwUdflugter.setDisable(false);
+				cboxUdflugter.setDisable(false);
+			}
+		} else {
+			for (TextField tf : txfLedsager) {
+				tf.setDisable(true);
+				lvwUdflugter.setDisable(true);
+				cboxUdflugter.setDisable(true);
+			}
+		}
 
-        updateTotalPrice();
-    }
+		updateTotalPrice();
+	}
 
-    private void btnAcceptAction() {
-        updateTotalPrice();
+	private void btnAcceptAction() {
+		updateTotalPrice();
 
-        confirm.showAndWait();
-        if (confirm.confirmed) {
-            Person deltager = new Person(txfDeltager[0].getText(), txfDeltager[1].getText(), txfDeltager[2].getText(),
-                    txfDeltager[3].getText());
-            Person ledsager = null;
-            if (cbLedsager.isSelected()) {
-                ledsager = new Person(txfLedsager[0].getText(), txfLedsager[1].getText(), txfLedsager[2].getText(),
-                        txfLedsager[3].getText());
-            }
+		confirm.showAndWait();
+		Person deltager = null;
+		if (confirm.confirmed) {
+			Service.createPerson(txfDeltager[0].getText(), txfDeltager[1].getText(), txfDeltager[2].getText(),
+					txfDeltager[3].getText());
+			Person ledsager = null;
+			if (cbLedsager.isSelected()) {
+				Service.createPerson(txfLedsager[0].getText(), txfLedsager[1].getText(), txfLedsager[2].getText(),
+						txfLedsager[3].getText());
+			}
 
-            // TODO: Update LocalDate.now.
-            Tilmelding tilmelding = new Tilmelding(konference, LocalDate.now(), LocalDate.now(), deltager, ledsager);
+			// TODO: Update LocalDate.now.
+			Service.createTilmelding(konference, LocalDate.now(), LocalDate.now(), deltager, ledsager);
 
-            hide();
-        } else {
-            confirm.hide();
-        }
-    }
+			hide();
+		} else {
+			confirm.hide();
+		}
+	}
 
-    private void cboxTillaegAction() {
-        lvwTillaeg.setDisable(false);
-        if (!lvwTillaeg.getItems().contains(cboxTillaeg.getSelectionModel().getSelectedItem())) {
-            lvwTillaeg.getItems().add(cboxTillaeg.getSelectionModel().getSelectedItem());
-        }
-        // cboxTillaeg.getSelectionModel().clearSelection(); // Causes problems?
+	private void cboxTillaegAction() {
+		lvwTillaeg.setDisable(false);
+		if (!lvwTillaeg.getItems().contains(cboxTillaeg.getSelectionModel().getSelectedItem())) {
+			lvwTillaeg.getItems().add(cboxTillaeg.getSelectionModel().getSelectedItem());
+		}
+		// cboxTillaeg.getSelectionModel().clearSelection(); // Causes problems?
 
-        updateTotalPrice();
-    }
+		updateTotalPrice();
+	}
 
-    private void cboxUdflugterAction() {
-        lvwUdflugter.setDisable(false);
-        if (!lvwUdflugter.getItems().contains(cboxUdflugter.getSelectionModel().getSelectedItem())) {
-            lvwUdflugter.getItems().add(cboxUdflugter.getSelectionModel().getSelectedItem());
-        }
+	private void cboxUdflugterAction() {
+		lvwUdflugter.setDisable(false);
+		if (!lvwUdflugter.getItems().contains(cboxUdflugter.getSelectionModel().getSelectedItem())) {
+			lvwUdflugter.getItems().add(cboxUdflugter.getSelectionModel().getSelectedItem());
+		}
 
-        updateTotalPrice();
-    }
+		updateTotalPrice();
+	}
 
-    private void updateTotalPrice() {
-        double total = 0;
+	private void updateTotalPrice() {
+		double total = 0;
 
-        if (cboxHotels.getSelectionModel().getSelectedItem() != null) {
-            if (cbLedsager.isSelected()) {
-                total += cboxHotels.getSelectionModel().getSelectedItem().getPrisDobbelt();
-            } else {
-                total += cboxHotels.getSelectionModel().getSelectedItem().getPrisEnkelt();
-            }
-            for (HotelTillaeg ht : lvwTillaeg.getItems()) {
-                total += ht.getPris();
-            }
-        }
-        for (Udflugt u : lvwUdflugter.getItems()) {
-            total += u.getPris();
-        }
+		if (cboxHotels.getSelectionModel().getSelectedItem() != null) {
+			if (cbLedsager.isSelected()) {
+				total += cboxHotels.getSelectionModel().getSelectedItem().getPrisDobbelt();
+			} else {
+				total += cboxHotels.getSelectionModel().getSelectedItem().getPrisEnkelt();
+			}
+			for (HotelTillaeg ht : lvwTillaeg.getItems()) {
+				total += ht.getPris();
+			}
+		}
+		for (Udflugt u : lvwUdflugter.getItems()) {
+			total += u.getPris();
+		}
 
-        lblTotalPrice.setText("TOTAL: " + total);
-    }
+		lblTotalPrice.setText("TOTAL: " + total);
+	}
 
-    private void btnCancelAction() {
-        hide();
-    }
+	private void btnCancelAction() {
+		hide();
+	}
 
 }

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import application.Konference;
+import application.Service;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -96,13 +97,13 @@ public class CreateConferenceWindow extends Stage {
 
 	private void btnAcceptAction() {
 		try {
-			konference = new Konference(txfNavn.getText(), txfAdresse.getText(),
+			konference = Service.createKonference(txfNavn.getText(), txfAdresse.getText(),
 					LocalDateTime.parse(txfFraDato.getText(), timeFormat),
 					LocalDateTime.parse(txfTilDato.getText(), timeFormat), txfBeskrivelse.getText());
 		} catch (DateTimeParseException e) {
 			System.out.println("LocalDateTime parse failed. Using current time.");
-			konference = new Konference(txfNavn.getText(), txfAdresse.getText(), LocalDateTime.now(),
-					LocalDateTime.now(), txfBeskrivelse.getText());
+			konference = Service.createKonference(txfNavn.getText(), txfAdresse.getText(), LocalDateTime.now(), LocalDateTime.now(),
+					txfBeskrivelse.getText());
 		}
 
 		hide();
