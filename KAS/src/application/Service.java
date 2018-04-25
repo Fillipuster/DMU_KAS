@@ -39,10 +39,9 @@ public class Service {
 	}
 
 	// * Not needed?
-	// public static void createPerson(String fornavn, String efternavn, String
-	// adresse, String telefonNr) {
-	// Person p = new Person(fornavn, efternavn, adresse, telefonNr);
-	// }
+	public static void createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
+		Person p = new Person(fornavn, efternavn, adresse, telefonNr);
+	}
 
 	public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDateTime fraTid,
 			LocalDateTime tilTid, double pris, boolean frokost) {
