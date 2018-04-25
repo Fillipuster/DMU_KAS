@@ -18,25 +18,24 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
-    public static void main(String[] args) {
-        // TEST
+    private static void createTestData() {
         Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(), LocalDateTime.now(), 120, true);
         Udflugt u2 = new Udflugt("U2", "bllla", LocalDateTime.now(), LocalDateTime.now(), 202, false);
         @SuppressWarnings("unused")
         Konference _tk0 = new Konference("TestKonference", "TestVej", LocalDateTime.now(), LocalDateTime.now(),
                 "Det er bare en test drenge.");
-        _tk0.addUdflugt(u1);
-        _tk0.addUdflugt(u2);
         @SuppressWarnings("unused")
         Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
                 LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
+        _tk1.addUdflugt(u1);
+        _tk1.addUdflugt(u2);
 
         HotelTillaeg ht1 = new HotelTillaeg("Wifi", 50);
         HotelTillaeg ht2 = new HotelTillaeg("Morgenmad", 400);
         Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
         h.addHotelTillaeg(ht1);
         h.addHotelTillaeg(ht2);
-        //
+
         // Person p1 = new Person("Jonas", "Berg", "Whatever", "288713");
         // Person p2 = new Person("Daniel", "Præstegaard", "Gah", "923884");
         //
@@ -48,7 +47,10 @@ public class MainApp extends Application {
         //
         // System.out.println(t.totalPrice());
         // System.out.println(200 + 9001 + 202);
+    }
 
+    public static void main(String[] args) {
+        createTestData();
         Application.launch(args);
     }
 

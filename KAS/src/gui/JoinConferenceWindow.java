@@ -28,7 +28,9 @@ import javafx.stage.StageStyle;
 public class JoinConferenceWindow extends Stage {
 
     protected Konference konference;
+
     private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private ConfirmPopup confirm;
 
     public JoinConferenceWindow(String title, Stage owner) {
         initOwner(owner);
@@ -37,6 +39,9 @@ public class JoinConferenceWindow extends Stage {
         setMinHeight(100);
         setMinWidth(200);
         setResizable(false);
+
+        confirm = new ConfirmPopup("Accepter Tilmelding", owner,
+                "Er du sikker på at du vil\ntilmelde dig konferencen?");
 
         setTitle(title);
         GridPane pane = new GridPane();
@@ -57,6 +62,7 @@ public class JoinConferenceWindow extends Stage {
     private ListView<HotelTillaeg> lvwTillaeg;
     private ComboBox<Udflugt> cboxUdflugter;
     private ListView<Udflugt> lvwUdflugter;
+    private Label lblTotalPrice;
 
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
@@ -164,19 +170,29 @@ public class JoinConferenceWindow extends Stage {
         pane.add(btnAccept, 1, 13);
         btnAccept.setOnAction(event -> btnAcceptAction());
 
+        // Total Price Label
+        lblTotalPrice = new Label("TOTAL: 0.0");
+        pane.add(lblTotalPrice, 3, 13);
+
     }
 
     private void btnRemoveTilaegAction() {
         lvwTillaeg.getItems().remove(lvwTillaeg.getSelectionModel().getSelectedItem());
+
+        updateTotalPrice();
     }
 
     private void btnRemoveUdflugtAction() {
         lvwUdflugter.getItems().remove(lvwUdflugter.getSelectionModel().getSelectedItem());
+
+        updateTotalPrice();
     }
 
     private void cboxHotelsAction() {
         cboxTillaeg.getItems().addAll(cboxHotels.getSelectionModel().getSelectedItem().getHotelTillaeg());
         cboxTillaeg.setDisable(false);
+
+        updateTotalPrice();
     }
 
     private void cbLedsagerAction() {
@@ -195,21 +211,30 @@ public class JoinConferenceWindow extends Stage {
                 cboxUdflugter.setDisable(true);
             }
         }
+
+        updateTotalPrice();
     }
 
     private void btnAcceptAction() {
-        Person deltager = new Person(txfDeltager[0].getText(), txfDeltager[1].getText(), txfDeltager[2].getText(),
-                txfDeltager[3].getText());
-        Person ledsager = null;
-        if (cbLedsager.isSelected()) {
-            ledsager = new Person(txfLedsager[0].getText(), txfLedsager[1].getText(), txfLedsager[2].getText(),
-                    txfLedsager[3].getText());
+        updateTotalPrice();
+
+        confirm.showAndWait();
+        if (confirm.confirmed) {
+            Person deltager = new Person(txfDeltager[0].getText(), txfDeltager[1].getText(), txfDeltager[2].getText(),
+                    txfDeltager[3].getText());
+            Person ledsager = null;
+            if (cbLedsager.isSelected()) {
+                ledsager = new Person(txfLedsager[0].getText(), txfLedsager[1].getText(), txfLedsager[2].getText(),
+                        txfLedsager[3].getText());
+            }
+
+            // TODO: Update LocalDate.now.
+            Tilmelding tilmelding = new Tilmelding(konference, LocalDate.now(), LocalDate.now(), deltager, ledsager);
+
+            hide();
+        } else {
+            confirm.hide();
         }
-
-        // TODO: Update LocalDate.now.
-        Tilmelding tilmelding = new Tilmelding(konference, LocalDate.now(), LocalDate.now(), deltager, ledsager);
-
-        hide();
     }
 
     private void cboxTillaegAction() {
@@ -218,6 +243,8 @@ public class JoinConferenceWindow extends Stage {
             lvwTillaeg.getItems().add(cboxTillaeg.getSelectionModel().getSelectedItem());
         }
         // cboxTillaeg.getSelectionModel().clearSelection(); // Causes problems?
+
+        updateTotalPrice();
     }
 
     private void cboxUdflugterAction() {
@@ -225,6 +252,28 @@ public class JoinConferenceWindow extends Stage {
         if (!lvwUdflugter.getItems().contains(cboxUdflugter.getSelectionModel().getSelectedItem())) {
             lvwUdflugter.getItems().add(cboxUdflugter.getSelectionModel().getSelectedItem());
         }
+
+        updateTotalPrice();
+    }
+
+    private void updateTotalPrice() {
+        double total = 0;
+
+        if (cboxHotels.getSelectionModel().getSelectedItem() != null) {
+            if (cbLedsager.isSelected()) {
+                total += cboxHotels.getSelectionModel().getSelectedItem().getPrisDobbelt();
+            } else {
+                total += cboxHotels.getSelectionModel().getSelectedItem().getPrisEnkelt();
+            }
+            for (HotelTillaeg ht : lvwTillaeg.getItems()) {
+                total += ht.getPris();
+            }
+        }
+        for (Udflugt u : lvwUdflugter.getItems()) {
+            total += u.getPris();
+        }
+
+        lblTotalPrice.setText("TOTAL: " + total);
     }
 
     private void btnCancelAction() {
