@@ -19,16 +19,13 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
     private static void createTestData() {
+        Konference k = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
+                LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
+
         Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(), LocalDateTime.now(), 120, true);
         Udflugt u2 = new Udflugt("U2", "bllla", LocalDateTime.now(), LocalDateTime.now(), 202, false);
-        @SuppressWarnings("unused")
-        Konference _tk0 = new Konference("TestKonference", "TestVej", LocalDateTime.now(), LocalDateTime.now(),
-                "Det er bare en test drenge.");
-        @SuppressWarnings("unused")
-        Konference _tk1 = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
-                LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
-        _tk1.addUdflugt(u1);
-        _tk1.addUdflugt(u2);
+        k.addUdflugt(u1);
+        k.addUdflugt(u2);
 
         HotelTillaeg ht1 = new HotelTillaeg("Wifi", 50);
         HotelTillaeg ht2 = new HotelTillaeg("Morgenmad", 400);
