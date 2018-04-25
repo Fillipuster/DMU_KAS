@@ -8,9 +8,11 @@ public class Service {
 
 	private static ArrayList<Konference> konferencer = new ArrayList<>();
 	private static ArrayList<Hotel> hoteller = new ArrayList<>();
+	private static ArrayList<Person> personer = new ArrayList<>();
 
 	public static void addKonference(Konference konference) {
 		konferencer.add(konference);
+		System.out.println("Tilføjet");
 	}
 
 	public static ArrayList<Konference> getKonferencer() {
@@ -25,17 +27,29 @@ public class Service {
 		return new ArrayList<>(hoteller);
 	}
 
+	public static void addPerson(Person person) {
+		personer.add(person);
+	}
+
+	public static ArrayList<Person> getPersons() {
+		return new ArrayList<>(personer);
+	}
+
 	public static void createTilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato,
 			Person deltager, Person ledsager) {
 		Tilmelding t = new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager);
 	}
 
-	public static void createKonference(String navn, String adresse, LocalDateTime fraDato, LocalDateTime tilDato,
+	public static Konference createKonference(String navn, String adresse, LocalDateTime fraDato, LocalDateTime tilDato,
 			String beskrivelse) {
 		Konference k = new Konference(navn, adresse, fraDato, tilDato, beskrivelse);
+		addKonference(k);
+		return k;
+		
 	}
 
 	public static void createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
 		Person p = new Person(fornavn, efternavn, adresse, telefonNr);
+		addPerson(p);
 	}
 }

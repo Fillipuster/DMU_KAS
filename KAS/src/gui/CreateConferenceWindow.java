@@ -97,12 +97,12 @@ public class CreateConferenceWindow extends Stage {
 
 	private void btnAcceptAction() {
 		try {
-			Service.createKonference(txfNavn.getText(), txfAdresse.getText(),
+			konference = Service.createKonference(txfNavn.getText(), txfAdresse.getText(),
 					LocalDateTime.parse(txfFraDato.getText(), timeFormat),
 					LocalDateTime.parse(txfTilDato.getText(), timeFormat), txfBeskrivelse.getText());
 		} catch (DateTimeParseException e) {
 			System.out.println("LocalDateTime parse failed. Using current time.");
-			Service.createKonference(txfNavn.getText(), txfAdresse.getText(), LocalDateTime.now(), LocalDateTime.now(),
+			konference = Service.createKonference(txfNavn.getText(), txfAdresse.getText(), LocalDateTime.now(), LocalDateTime.now(),
 					txfBeskrivelse.getText());
 		}
 
