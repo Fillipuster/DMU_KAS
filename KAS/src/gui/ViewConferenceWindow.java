@@ -69,8 +69,8 @@ public class ViewConferenceWindow extends Stage {
         pane.add(tabPane, 0, 0);
     }
 
-    private TextField txfNavnKT, txfAdresseKT, txfFraDatoKT, txfTilDatoKT, txfBeskrivelseKT;
-    private DatePicker dpFraDatoKT;
+    private TextField txfNavnKT, txfAdresseKT, txfBeskrivelseKT;
+    private DatePicker dpFraDatoKT, dpTilDatoKT;
 
     private GridPane buildKonferencePane() {
         GridPane pane = new GridPane();
@@ -96,20 +96,17 @@ public class ViewConferenceWindow extends Stage {
         Label lblFraDato = new Label("Fra Dato:");
         pane.add(lblFraDato, 0, 5);
 
-        txfFraDatoKT = new TextField("<fra_dato>");
-        pane.add(txfFraDatoKT, 0, 6);
+        dpFraDatoKT = new DatePicker(LocalDate.now());
+        pane.add(dpFraDatoKT, 0, 6);
 
         Label lblTilDato = new Label("Til dato:");
         pane.add(lblTilDato, 0, 7);
 
-        txfTilDatoKT = new TextField("<til_date>");
-        pane.add(txfTilDatoKT, 0, 8);
+        dpTilDatoKT = new DatePicker(LocalDate.now());
+        pane.add(dpTilDatoKT, 0, 8);
 
         Label lblBeskrivelse = new Label("Beskrivelse:");
         pane.add(lblBeskrivelse, 1, 1);
-
-        dpFraDatoKT = new DatePicker(LocalDate.now());
-        pane.add(dpFraDatoKT, 1, 2);
 
         txfBeskrivelseKT = new TextField("<beskrivelse>");
         pane.add(txfBeskrivelseKT, 1, 2, 2, 3);
@@ -129,8 +126,8 @@ public class ViewConferenceWindow extends Stage {
 
         txfNavnKT.setText(konference.getNavn());
         txfAdresseKT.setText(konference.getAdresse());
-        txfFraDatoKT.setText(konference.getFraDato().toString());
-        txfTilDatoKT.setText(konference.getTilDato().toString());
+        dpFraDatoKT.setValue(konference.getFraDato());
+        dpTilDatoKT.setValue(konference.getTilDato());
         txfBeskrivelseKT.setText(konference.getBeskrivelse());
     }
 
