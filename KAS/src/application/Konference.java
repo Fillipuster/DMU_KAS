@@ -1,84 +1,85 @@
 package application;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Konference {
-	private String navn;
-	private String adresse;
-	private LocalDateTime fraDato;
-	private LocalDateTime tilDato;
-	private String beskrivelse;
-	private ArrayList<Tilmelding> tilmeldte = new ArrayList<>();
-	private ArrayList<Udflugt> udflugter = new ArrayList<>();
+    private String navn;
+    private String adresse;
+    private LocalDate fraDato;
+    private LocalDate tilDato;
+    private String beskrivelse;
+    private ArrayList<Tilmelding> tilmeldte = new ArrayList<>();
+    private ArrayList<Udflugt> udflugter = new ArrayList<>();
 
-	public Konference(String navn, String adresse, LocalDateTime fraDato, LocalDateTime tilDato, String beskrivelse) {
-		this.navn = navn;
-		this.adresse = adresse;
-		this.fraDato = fraDato;
-		this.tilDato = tilDato;
-		this.beskrivelse = beskrivelse;
-	}
+    public Konference(String navn, String adresse, LocalDate fraDato, LocalDate tilDato, String beskrivelse) {
+        this.navn = navn;
+        this.adresse = adresse;
+        this.fraDato = fraDato;
+        this.tilDato = tilDato;
+        this.beskrivelse = beskrivelse;
+    }
 
-	public String getNavn() {
-		return navn;
-	}
+    public String getNavn() {
+        return navn;
+    }
 
-	public void setNavn(String navn) {
-		this.navn = navn;
-	}
+    public void setNavn(String navn) {
+        this.navn = navn;
+    }
 
-	public String getAdresse() {
-		return adresse;
-	}
+    public String getAdresse() {
+        return adresse;
+    }
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
-	}
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
 
-	public LocalDateTime getFraDato() {
-		return fraDato;
-	}
+    public LocalDate getFraDato() {
+        return fraDato;
+    }
 
-	public void setFraDato(LocalDateTime fraDato) {
-		this.fraDato = fraDato;
-	}
+    public void setFraDato(LocalDate fraDato) {
+        this.fraDato = fraDato;
+    }
 
-	public LocalDateTime getTilDato() {
-		return tilDato;
-	}
+    public LocalDate getTilDato() {
+        return tilDato;
+    }
 
-	public void setTilDato(LocalDateTime tilDato) {
-		this.tilDato = tilDato;
-	}
+    public void setTilDato(LocalDate tilDato) {
+        this.tilDato = tilDato;
+    }
 
-	public String getBeskrivelse() {
-		return beskrivelse;
-	}
+    public String getBeskrivelse() {
+        return beskrivelse;
+    }
 
-	public void setBeskrivelse(String beskrivelse) {
-		this.beskrivelse = beskrivelse;
-	}
+    public void setBeskrivelse(String beskrivelse) {
+        this.beskrivelse = beskrivelse;
+    }
 
-	public void addTilmelding(Tilmelding tilmelding) {
-		this.tilmeldte.add(tilmelding);
-	}
+    public void addTilmelding(Tilmelding tilmelding) {
+        this.tilmeldte.add(tilmelding);
+    }
 
-	public ArrayList<Udflugt> getUdflugter() {
-		return new ArrayList<>(udflugter);
-	}
+    public ArrayList<Udflugt> getUdflugter() {
+        return new ArrayList<>(udflugter);
+    }
 
-	public void addUdflugt(Udflugt udflugt) {
-		udflugter.add(udflugt);
-	}
+    public void addUdflugt(Udflugt udflugt) {
+        udflugter.add(udflugt);
+    }
 
-	public void removeUdflugt(Udflugt udflugt) {
-		udflugter.remove(udflugt);
-	}
+    public void removeUdflugt(Udflugt udflugt) {
+        udflugter.remove(udflugt);
+    }
 
-	@Override
-	public String toString() {
-		return navn;
-	}
+    @Override
+    public String toString() {
+        return navn;
+    }
 
 }

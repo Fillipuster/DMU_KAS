@@ -1,14 +1,12 @@
 package gui;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import application.Hotel;
 import application.HotelTillaeg;
 import application.Konference;
-import application.Person;
 import application.Service;
-import application.Tilmelding;
-import application.Udflugt;
 import javafx.application.Application;
 import javafx.geometry.*;
 import javafx.scene.Scene;
@@ -19,13 +17,11 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
     private static void createTestData() {
-        Konference k = new Konference("Baconferencen", "Ham Road 22", LocalDateTime.now().plusDays(3),
-                LocalDateTime.now().plusDays(5), "Det handler om bacon, drenge.");
+        Konference k = Service.createKonference("Baconferencen", "Ham Road 22", LocalDate.now().plusDays(3),
+                LocalDate.now().plusDays(5), "Det handler om bacon, drenge.");
 
-        Udflugt u1 = new Udflugt("U1", "bla", LocalDateTime.now(), LocalDateTime.now(), 120, true);
-        Udflugt u2 = new Udflugt("U2", "bllla", LocalDateTime.now(), LocalDateTime.now(), 202, false);
-        k.addUdflugt(u1);
-        k.addUdflugt(u2);
+        Service.createUdflugt(k, "U1", "bla", LocalDateTime.now(), LocalDateTime.now(), 120, true);
+        Service.createUdflugt(k, "U2", "bllla", LocalDateTime.now(), LocalDateTime.now(), 202, false);
 
         HotelTillaeg ht1 = new HotelTillaeg("Wifi", 50);
         HotelTillaeg ht2 = new HotelTillaeg("Morgenmad", 400);
