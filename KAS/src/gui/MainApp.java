@@ -60,7 +60,6 @@ public class MainApp extends Application {
         viewConference = new ViewConferenceWindow("Konferencevisning", stage);
         createConference = new CreateConferenceWindow("Opret Konference", stage);
         joinconference = new JoinConferenceWindow("Tilmeld Konference", stage);
-        cp = new ConfirmPopup("TestTitle", stage, "TestLabel");
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -73,9 +72,6 @@ public class MainApp extends Application {
     private JoinConferenceWindow joinconference;
     private ComboBox<Konference> cbKonferencer;
     private Button btnJoin, btnView, btnCreate;
-
-    // TEST
-    private ConfirmPopup cp;
 
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
@@ -97,7 +93,7 @@ public class MainApp extends Application {
         btnJoin.setOnAction(event -> controller.btnJoinAction());
         btnJoin.setDisable(true);
 
-        btnView = new Button("Se Konferencedetaljer");
+        btnView = new Button("Konferencedetaljer");
         pane.add(btnView, 0, 3);
         btnView.setOnAction(event -> controller.btnViewAction());
         btnView.setDisable(true);
@@ -120,9 +116,8 @@ public class MainApp extends Application {
         }
 
         public void btnViewAction() {
-            // viewConference.setStageTitle(cbKonferencer.getSelectionModel().getSelectedItem().getNavn());
-            // viewConference.showAndWait();
-            cp.showAndWait();
+            viewConference.setKonference(cbKonferencer.getSelectionModel().getSelectedItem());
+            viewConference.showAndWait();
         }
 
         public void btnJoinAction() {
