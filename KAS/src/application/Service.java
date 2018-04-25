@@ -8,7 +8,6 @@ public class Service {
 
 	private static ArrayList<Konference> konferencer = new ArrayList<>();
 	private static ArrayList<Hotel> hoteller = new ArrayList<>();
-	private static ArrayList<Person> personer = new ArrayList<>();
 
 	public static void addKonference(Konference konference) {
 		konferencer.add(konference);
@@ -26,14 +25,6 @@ public class Service {
 		return new ArrayList<>(hoteller);
 	}
 
-	public static void addPerson(Person person) {
-		personer.add(person);
-	}
-
-	public static ArrayList<Person> getPersons() {
-		return new ArrayList<>(personer);
-	}
-
 	public static void createTilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato,
 			Person deltager, Person ledsager) {
 		Tilmelding t = new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager);
@@ -47,10 +38,11 @@ public class Service {
 
 	}
 
-	public static void createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
-		Person p = new Person(fornavn, efternavn, adresse, telefonNr);
-		addPerson(p);
-	}
+	// * Not needed?
+	// public static void createPerson(String fornavn, String efternavn, String
+	// adresse, String telefonNr) {
+	// Person p = new Person(fornavn, efternavn, adresse, telefonNr);
+	// }
 
 	public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDateTime fraTid,
 			LocalDateTime tilTid, double pris, boolean frokost) {
