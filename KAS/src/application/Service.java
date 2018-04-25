@@ -51,4 +51,11 @@ public class Service {
 		Person p = new Person(fornavn, efternavn, adresse, telefonNr);
 		addPerson(p);
 	}
+
+	public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDateTime fraTid,
+			LocalDateTime tilTid, double pris, boolean frokost) {
+		Udflugt u = new Udflugt(navn, beskrivelse, fraTid, tilTid, pris, frokost);
+		konference.addUdflugt(u);
+		return u;
+	}
 }
