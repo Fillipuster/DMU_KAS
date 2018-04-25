@@ -1,26 +1,41 @@
 package application;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Service {
 
-    private static ArrayList<Konference> konferencer = new ArrayList<>();
-    private static ArrayList<Hotel> hoteller = new ArrayList<>();
+	private static ArrayList<Konference> konferencer = new ArrayList<>();
+	private static ArrayList<Hotel> hoteller = new ArrayList<>();
 
-    public static void addKonference(Konference konference) {
-        konferencer.add(konference);
-    }
+	public static void addKonference(Konference konference) {
+		konferencer.add(konference);
+	}
 
-    public static ArrayList<Konference> getKonferencer() {
-        return new ArrayList<>(konferencer);
-    }
+	public static ArrayList<Konference> getKonferencer() {
+		return new ArrayList<>(konferencer);
+	}
 
-    public static void addHotel(Hotel hotel) {
-        hoteller.add(hotel);
-    }
+	public static void addHotel(Hotel hotel) {
+		hoteller.add(hotel);
+	}
 
-    public static ArrayList<Hotel> getHotels() {
-        return new ArrayList<>(hoteller);
-    }
+	public static ArrayList<Hotel> getHotels() {
+		return new ArrayList<>(hoteller);
+	}
 
+	public static void createTilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato,
+			Person deltager, Person ledsager) {
+		Tilmelding t = new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager);
+	}
+
+	public static void createKonference(String navn, String adresse, LocalDateTime fraDato, LocalDateTime tilDato,
+			String beskrivelse) {
+		Konference k = new Konference(navn, adresse, fraDato, tilDato, beskrivelse);
+	}
+
+	public static void createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
+		Person p = new Person(fornavn, efternavn, adresse, telefonNr);
+	}
 }
