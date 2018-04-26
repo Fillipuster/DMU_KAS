@@ -3,56 +3,86 @@ package application;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import storage.Storage;
+
 public class Service {
 
-	private static ArrayList<Konference> konferencer = new ArrayList<>();
-	private static ArrayList<Hotel> hoteller = new ArrayList<>();
+    // Konferencer
+    public static ArrayList<Konference> getKonferencer() {
+        return Storage.getKonferencer();
+    }
 
-	public static void addKonference(Konference konference) {
-		konferencer.add(konference);
-	}
+    public static void addKonference(Konference konference) {
+        Storage.addKonference(konference);
+    }
 
-	public static ArrayList<Konference> getKonferencer() {
-		return new ArrayList<>(konferencer);
-	}
+    public static void removeKonference(Konference konference) {
+        Storage.removeKonference(konference);
+    }
 
-	public static void addHotel(Hotel hotel) {
-		hoteller.add(hotel);
-	}
+    // Hoteller
+    public static ArrayList<Hotel> getHotels() {
+        return Storage.getHotels();
+    }
 
-	public static ArrayList<Hotel> getHotels() {
-		return new ArrayList<>(hoteller);
-	}
+    public static void addHotel(Hotel hotel) {
+        Storage.addHotel(hotel);
+    }
 
-	public static void createTilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato,
-			Person deltager, Person ledsager) {
-		Tilmelding t = new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager);
-	}
+    public static void removeHotel(Hotel hotel) {
+        Storage.removeHotel(hotel);
+    }
 
-	public static Konference createKonference(String navn, String adresse, LocalDate fraDato, LocalDate tilDato,
-			String beskrivelse) {
-		Konference k = new Konference(navn, adresse, fraDato, tilDato, beskrivelse);
-		addKonference(k);
+    // Creation
+    public static Hotel createHotel(String navn, String adresse, double prisEnkelt, double prisDobbelt) {
+        Hotel h = new Hotel(navn, adresse, prisEnkelt, prisDobbelt);
+        addHotel(h);
 
-		return k;
-	}
+        return h;
+    }
 
-	public static void createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
-		Person p = new Person(fornavn, efternavn, adresse, telefonNr);
-	}
+    public static HotelTillaeg createHotelTillaeg(Hotel hotel, String navn, double pris) {
+        HotelTillaeg ht = new HotelTillaeg(navn, pris);
+        hotel.addHotelTillaeg(ht);
 
-	public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDate fraTid,
-			LocalDate tilTid, double pris, boolean frokost) {
-		Udflugt u = new Udflugt(navn, beskrivelse, fraTid, tilTid, pris, frokost);
-		konference.addUdflugt(u);
+        return ht;
+    }
 
-		return u;
-	}
+    public static Konference createKonference(String navn, String adresse, LocalDate fraDato, LocalDate tilDato,
+            String beskrivelse) {
+        Konference k = new Konference(navn, adresse, fraDato, tilDato, beskrivelse);
+        addKonference(k);
 
-	public static HotelTillaeg createHotelTillaeg(Hotel hotel, String navn, double pris) {
-		HotelTillaeg ht = new HotelTillaeg(navn, pris);
-		hotel.addHotelTillaeg(ht);
+        return k;
+    }
 
-		return ht;
-	}
+    public static Person createPerson(String fornavn, String efternavn, String adresse, String telefonNr) {
+        return new Person(fornavn, efternavn, adresse, telefonNr);
+    }
+
+    public static Tilmelding createTilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato,
+            Person deltager, Person ledsager) {
+        return new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager);
+    }
+
+    public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDate fraTid,
+            LocalDate tilTid, double pris, boolean frokost) {
+        Udflugt u = new Udflugt(navn, beskrivelse, fraTid, tilTid, pris, frokost);
+        konference.addUdflugt(u);
+
+        return u;
+    }
+
+    // Updating
+    public static void updateHotel(Hotel hotel, String navn, String adresse, double prisEnkelt, double prisDobbelt) {
+        hotel.setNavn(navn);
+        hotel.setAdresse(adresse);
+        hotel.setPrisEnkelt(prisEnkelt);
+        hotel.setPrisDobbelt(prisDobbelt);
+    }
+
+    public static void updateHotelTillaeg(HotelTillaeg hotelTillaeg, String navn, double pris) {
+        hotelTillaeg.setNavn(navn);
+        hotelTillaeg.setPris(pris);
+    }
 }

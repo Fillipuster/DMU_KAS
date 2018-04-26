@@ -18,17 +18,20 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
     private static void createTestData() {
-        Konference k = Service.createKonference("Baconferencen", "Ham Road 22", LocalDate.now().plusDays(3),
-                LocalDate.now().plusDays(5), "Det handler om bacon, drenge.");
-
-        Service.createUdflugt(k, "U1", "bla", LocalDate.now(), LocalDate.now(), 120, true);
-        Service.createUdflugt(k, "U2", "bllla", LocalDate.now(), LocalDate.now(), 202, false);
-
-        HotelTillaeg ht1 = new HotelTillaeg("Wifi", 50);
-        HotelTillaeg ht2 = new HotelTillaeg("Morgenmad", 400);
-        Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
-        h.addHotelTillaeg(ht1);
-        h.addHotelTillaeg(ht2);
+        // Konference k = Service.createKonference("Baconferencen", "Ham Road 22",
+        // LocalDate.now().plusDays(3),
+        // LocalDate.now().plusDays(5), "Det handler om bacon, drenge.");
+        //
+        // Service.createUdflugt(k, "U1", "bla", LocalDate.now(), LocalDate.now(), 120,
+        // true);
+        // Service.createUdflugt(k, "U2", "bllla", LocalDate.now(), LocalDate.now(),
+        // 202, false);
+        //
+        // HotelTillaeg ht1 = new HotelTillaeg("Wifi", 50);
+        // HotelTillaeg ht2 = new HotelTillaeg("Morgenmad", 400);
+        // Hotel h = new Hotel("Testotel", "Whatever", 100, 200);
+        // h.addHotelTillaeg(ht1);
+        // h.addHotelTillaeg(ht2);
 
         // Person p1 = new Person("Jonas", "Berg", "Whatever", "288713");
         // Person p2 = new Person("Daniel", "Præstegaard", "Gah", "923884");

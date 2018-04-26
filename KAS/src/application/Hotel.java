@@ -14,8 +14,6 @@ public class Hotel {
         this.adresse = adresse;
         this.prisEnkelt = prisEnkelt;
         this.prisDobbelt = prisDobbelt;
-
-        Service.addHotel(this);
     }
 
     public String getNavn() {

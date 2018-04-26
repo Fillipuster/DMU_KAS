@@ -66,6 +66,7 @@ public class HoteladminWindow extends Stage {
         pane.add(txfPrisDobbelt, 1, 3);
 
         Button btnOpretRediger = new Button("Opret/Rediger");
+        btnOpretRediger.setOnAction(event -> btnOpretRedigerAction());
         pane.add(btnOpretRediger, 1, 5);
 
         Button btnSlet = new Button("Slet");
@@ -84,6 +85,7 @@ public class HoteladminWindow extends Stage {
         pane.add(txfTillaegPris, 3, 1);
 
         Button btnTillaegOpretRediger = new Button("Opret/Rediger");
+        btnTillaegOpretRediger.setOnAction(event -> btnTillaegOpretRedigerAction());
         pane.add(btnTillaegOpretRediger, 3, 3);
 
         Button btnTillaegSlet = new Button("Slet");
@@ -96,10 +98,13 @@ public class HoteladminWindow extends Stage {
     // Node Actions
 
     private void lvwHotelsUpdate() {
+        lvwHotels.getItems().removeAll(lvwHotels.getItems());
         lvwHotels.getItems().addAll(Service.getHotels());
     }
 
     private void lvwHotelTillaegsUpdate() {
+        lvwHotelTillaegs.getItems().removeAll(lvwHotelTillaegs.getItems());
+
         Hotel selected = lvwHotels.getSelectionModel().getSelectedItem();
         if (selected != null) {
             lvwHotelTillaegs.getItems().setAll(selected.getHotelTillaeg());
@@ -125,4 +130,31 @@ public class HoteladminWindow extends Stage {
         }
     }
 
+    private void btnOpretRedigerAction() {
+        Hotel selected = lvwHotels.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            Service.updateHotel(selected, txfNavn.getText(), txfAdresse.getText(),
+                    Double.parseDouble(txfPrisEnkelt.getText()), Double.parseDouble(txfPrisDobbelt.getText()));
+        } else {
+            Service.createHotel(txfNavn.getText(), txfAdresse.getText(), Double.parseDouble(txfPrisEnkelt.getText()),
+                    Double.parseDouble(txfPrisDobbelt.getText()));
+        }
+
+        lvwHotelsUpdate();
+    }
+
+    private void btnTillaegOpretRedigerAction() {
+        HotelTillaeg selected = lvwHotelTillaegs.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            Service.updateHotelTillaeg(selected, txfTillaegNavn.getText(),
+                    Double.parseDouble(txfTillaegPris.getText()));
+        } else {
+            Service.createHotelTillaeg(lvwHotels.getSelectionModel().getSelectedItem(), txfTillaegNavn.getText(),
+                    Double.parseDouble(txfTillaegPris.getText()));
+        }
+
+        lvwHotelTillaegsUpdate();
+    }
 }
