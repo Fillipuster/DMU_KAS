@@ -72,7 +72,7 @@ public class MainApp extends Application {
     private TilmeldKonferenceWindow tilmeldKonferenceWindow;
     private OpretRedigerKonferenceWindow opretRedigerKonferenceWindow;
 
-    private ComboBox<Konference> cbKonferencer;
+    private ComboBox<Konference> cboxKonferencer;
     private Button btnJoin, btnHoteladmin, btnCreate;
 
     private void initContent(GridPane pane) {
@@ -84,11 +84,11 @@ public class MainApp extends Application {
         Label lblTitle = new Label("Vælg konference:");
         pane.add(lblTitle, 0, 0);
 
-        cbKonferencer = new ComboBox<>();
-        cbKonferencer.setMinWidth(308);
-        pane.add(cbKonferencer, 0, 1, 2, 1);
+        cboxKonferencer = new ComboBox<>();
+        cboxKonferencer.setMinWidth(308);
+        pane.add(cboxKonferencer, 0, 1, 2, 1);
         controller.updateKonferencerListe();
-        cbKonferencer.setOnAction(event -> controller.cbKonferencerAction());
+        cboxKonferencer.setOnAction(event -> controller.cbKonferencerAction());
 
         btnJoin = new Button("Tilmeld Konference");
         pane.add(btnJoin, 3, 1);
@@ -110,7 +110,14 @@ public class MainApp extends Application {
     private class Controller {
         public void btnCreateAction() {
             opretRedigerKonferenceWindow.updateHotelList();
+            if (cboxKonferencer.getSelectionModel().getSelectedItem() != null) {
+                opretRedigerKonferenceWindow.setKonference(cboxKonferencer.getSelectionModel().getSelectedItem());
+            }
+            opretRedigerKonferenceWindow.updateKonferenceBasedNodes();
             opretRedigerKonferenceWindow.showAndWait();
+            if (opretRedigerKonferenceWindow.getKonference() != null) {
+                updateKonferencerListe();
+            }
             // if (createConference.konference != null) {
             // System.out.println("Konference oprettet!");
             // updateKonferencerListe();
@@ -118,17 +125,16 @@ public class MainApp extends Application {
         }
 
         public void btnHoteladminAction() {
-
             hoteladminWindow.showAndWait();
         }
 
         public void btnJoinAction() {
-            tilmeldKonferenceWindow.konference = cbKonferencer.getSelectionModel().getSelectedItem();
+            tilmeldKonferenceWindow.konference = cboxKonferencer.getSelectionModel().getSelectedItem();
             tilmeldKonferenceWindow.showAndWait();
         }
 
         private void updateKonferencerListe() {
-            cbKonferencer.getItems().setAll(Service.getKonferencer());
+            cboxKonferencer.getItems().setAll(Service.getKonferencer());
         }
 
         private void cbKonferencerAction() {

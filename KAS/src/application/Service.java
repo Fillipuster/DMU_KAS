@@ -70,9 +70,9 @@ public class Service {
         return new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager);
     }
 
-    public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDate fraTid,
-            LocalDate tilTid, double pris, boolean frokost) {
-        Udflugt u = new Udflugt(navn, beskrivelse, fraTid, tilTid, pris, frokost);
+    public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDate dato,
+            double pris, boolean frokost) {
+        Udflugt u = new Udflugt(navn, beskrivelse, dato, pris, frokost);
         konference.addUdflugt(u);
 
         return u;
