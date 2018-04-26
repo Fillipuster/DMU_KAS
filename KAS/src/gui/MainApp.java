@@ -58,7 +58,8 @@ public class MainApp extends Application {
         initContent(pane);
 
         hoteladminWindow = new HoteladminWindow("Hoteladministration", stage);
-        joinconference = new TilmeldKonferenceWindow("Tilmeld Konference", stage);
+        tilmeldKonferenceWindow = new TilmeldKonferenceWindow("Tilmeld Konference", stage);
+        opretRedigerKonferenceWindow = new OpretRedigerKonferenceWindow("Opret/Rediger Konference", stage);
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -68,7 +69,8 @@ public class MainApp extends Application {
     private final Controller controller = new Controller();
 
     private HoteladminWindow hoteladminWindow;
-    private TilmeldKonferenceWindow joinconference;
+    private TilmeldKonferenceWindow tilmeldKonferenceWindow;
+    private OpretRedigerKonferenceWindow opretRedigerKonferenceWindow;
 
     private ComboBox<Konference> cbKonferencer;
     private Button btnJoin, btnHoteladmin, btnCreate;
@@ -97,22 +99,23 @@ public class MainApp extends Application {
         pane.add(btnHoteladmin, 0, 3);
         btnHoteladmin.setOnAction(event -> controller.btnHoteladminAction());
 
-        btnCreate = new Button("Opret Konference");
+        btnCreate = new Button("Opret/Rediger Konference");
         pane.add(btnCreate, 1, 3);
-        // btnCreate.setOnAction(event -> controller.btnCreateAction());
+        btnCreate.setOnAction(event -> controller.btnCreateAction());
 
         Label lblCopyright = new Label("© Berg, Valentin & Priestyard 2018");
         pane.add(lblCopyright, 0, 4);
     }
 
     private class Controller {
-        // public void btnCreateAction() {
-        // createConference.showAndWait();
-        // if (createConference.konference != null) {
-        // System.out.println("Konference oprettet!");
-        // updateKonferencerListe();
-        // }
-        // }
+        public void btnCreateAction() {
+            opretRedigerKonferenceWindow.updateHotelList();
+            opretRedigerKonferenceWindow.showAndWait();
+            // if (createConference.konference != null) {
+            // System.out.println("Konference oprettet!");
+            // updateKonferencerListe();
+            // }
+        }
 
         public void btnHoteladminAction() {
 
@@ -120,8 +123,8 @@ public class MainApp extends Application {
         }
 
         public void btnJoinAction() {
-            joinconference.konference = cbKonferencer.getSelectionModel().getSelectedItem();
-            joinconference.showAndWait();
+            tilmeldKonferenceWindow.konference = cbKonferencer.getSelectionModel().getSelectedItem();
+            tilmeldKonferenceWindow.showAndWait();
         }
 
         private void updateKonferencerListe() {

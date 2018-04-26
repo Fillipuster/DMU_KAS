@@ -33,6 +33,11 @@ public class Service {
         Storage.removeHotel(hotel);
     }
 
+    // HotelTillaeg
+    public static void removeHotelTillaeg(Hotel hotel, HotelTillaeg hotelTillaeg) {
+        hotel.removeHotelTillaeg(hotelTillaeg);
+    }
+
     // Creation
     public static Hotel createHotel(String navn, String adresse, double prisEnkelt, double prisDobbelt) {
         Hotel h = new Hotel(navn, adresse, prisEnkelt, prisDobbelt);
@@ -49,8 +54,8 @@ public class Service {
     }
 
     public static Konference createKonference(String navn, String adresse, LocalDate fraDato, LocalDate tilDato,
-            String beskrivelse) {
-        Konference k = new Konference(navn, adresse, fraDato, tilDato, beskrivelse);
+            String beskrivelse, double afgift) {
+        Konference k = new Konference(navn, adresse, fraDato, tilDato, beskrivelse, afgift);
         addKonference(k);
 
         return k;
@@ -84,5 +89,15 @@ public class Service {
     public static void updateHotelTillaeg(HotelTillaeg hotelTillaeg, String navn, double pris) {
         hotelTillaeg.setNavn(navn);
         hotelTillaeg.setPris(pris);
+    }
+
+    public static void updateKonference(Konference konference, String navn, String adresse, LocalDate fraDato,
+            LocalDate tilDato, String beskrivelse, double afgift) {
+        konference.setNavn(navn);
+        konference.setAdresse(adresse);
+        konference.setFraDato(fraDato);
+        konference.setTilDato(tilDato);
+        konference.setBeskrivelse(beskrivelse);
+        konference.setAfgift(afgift);
     }
 }

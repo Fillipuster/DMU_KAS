@@ -70,6 +70,7 @@ public class HoteladminWindow extends Stage {
         pane.add(btnOpretRediger, 1, 5);
 
         Button btnSlet = new Button("Slet");
+        btnSlet.setOnAction(event -> btnSletAction());
         pane.add(btnSlet, 1, 6);
 
         // Column #2
@@ -89,6 +90,7 @@ public class HoteladminWindow extends Stage {
         pane.add(btnTillaegOpretRediger, 3, 3);
 
         Button btnTillaegSlet = new Button("Slet");
+        btnTillaegSlet.setOnAction(event -> btnTillaegSletAction());
         pane.add(btnTillaegSlet, 3, 4);
 
         lvwHotelsUpdate();
@@ -96,7 +98,6 @@ public class HoteladminWindow extends Stage {
     }
 
     // Node Actions
-
     private void lvwHotelsUpdate() {
         lvwHotels.getItems().removeAll(lvwHotels.getItems());
         lvwHotels.getItems().addAll(Service.getHotels());
@@ -144,6 +145,15 @@ public class HoteladminWindow extends Stage {
         lvwHotelsUpdate();
     }
 
+    private void btnSletAction() {
+        Hotel selected = lvwHotels.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            Service.removeHotel(selected);
+            lvwHotelsUpdate();
+        }
+    }
+
     private void btnTillaegOpretRedigerAction() {
         HotelTillaeg selected = lvwHotelTillaegs.getSelectionModel().getSelectedItem();
 
@@ -156,5 +166,14 @@ public class HoteladminWindow extends Stage {
         }
 
         lvwHotelTillaegsUpdate();
+    }
+
+    private void btnTillaegSletAction() {
+        HotelTillaeg selected = lvwHotelTillaegs.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            Service.removeHotelTillaeg(lvwHotels.getSelectionModel().getSelectedItem(), selected);
+            lvwHotelTillaegsUpdate();
+        }
     }
 }

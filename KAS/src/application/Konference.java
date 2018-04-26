@@ -10,15 +10,18 @@ public class Konference {
     private LocalDate fraDato;
     private LocalDate tilDato;
     private String beskrivelse;
+    private double afgift;
     private ArrayList<Tilmelding> tilmeldte = new ArrayList<>();
     private ArrayList<Udflugt> udflugter = new ArrayList<>();
 
-    public Konference(String navn, String adresse, LocalDate fraDato, LocalDate tilDato, String beskrivelse) {
+    public Konference(String navn, String adresse, LocalDate fraDato, LocalDate tilDato, String beskrivelse,
+            double afgift) {
         this.navn = navn;
         this.adresse = adresse;
         this.fraDato = fraDato;
         this.tilDato = tilDato;
         this.beskrivelse = beskrivelse;
+        setAfgift(afgift);
     }
 
     public String getNavn() {
@@ -59,6 +62,14 @@ public class Konference {
 
     public void setBeskrivelse(String beskrivelse) {
         this.beskrivelse = beskrivelse;
+    }
+
+    public double getAfgift() {
+        return afgift;
+    }
+
+    public void setAfgift(double afgift) {
+        this.afgift = afgift;
     }
 
     public void addTilmelding(Tilmelding tilmelding) {
