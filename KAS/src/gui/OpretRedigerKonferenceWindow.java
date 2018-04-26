@@ -52,7 +52,7 @@ public class OpretRedigerKonferenceWindow extends Stage {
     }
 
     // Node Fields
-    private Button btnUdflugtOpretRediger, btnUdflugtSlet, btnGem;
+    private Button btnUdflugtOpretRediger, btnUdflugtSlet, btnGem, btnOpdater;
     private TextField txfNavn, txfAdresse, txfBeskrivelse, txfAfgift;
     private TextField txfUdflugtNavn, txfUdflugtBeskrivelse, txfUdflugtPris;
     private CheckBox cbUdflugtFrokost;
@@ -128,7 +128,7 @@ public class OpretRedigerKonferenceWindow extends Stage {
         btnUdflugtSlet.setOnAction(evnet -> btnUdflugtSletAction());
         pane.add(btnUdflugtSlet, 3, 7);
 
-        Button btnOpdater = new Button("Opdater");
+        btnOpdater = new Button("Opdater");
         btnOpdater.setOnAction(event -> btnOpdaterAction());
         pane.add(btnOpdater, 3, 10);
 
@@ -212,6 +212,10 @@ public class OpretRedigerKonferenceWindow extends Stage {
             konference.setTilDato(dpTilDato.getValue());
             konference.setBeskrivelse(txfBeskrivelse.getText());
             konference.setAfgift(Double.parseDouble(txfAfgift.getText()));
+            for (Hotel h : lvwHotels.getItems()) {
+                konference.addHotel(h);
+            }
+            hide();
         }
     }
 
@@ -231,5 +235,6 @@ public class OpretRedigerKonferenceWindow extends Stage {
         cbUdflugtFrokost.setDisable(konference == null);
 
         btnGem.setDisable(konference != null);
+        btnOpdater.setDisable(konference == null);
     }
 }

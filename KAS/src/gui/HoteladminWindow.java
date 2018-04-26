@@ -155,17 +155,19 @@ public class HoteladminWindow extends Stage {
     }
 
     private void btnTillaegOpretRedigerAction() {
-        HotelTillaeg selected = lvwHotelTillaegs.getSelectionModel().getSelectedItem();
+        if (lvwHotels.getSelectionModel().getSelectedItem() != null) {
+            HotelTillaeg selected = lvwHotelTillaegs.getSelectionModel().getSelectedItem();
 
-        if (selected != null) {
-            Service.updateHotelTillaeg(selected, txfTillaegNavn.getText(),
-                    Double.parseDouble(txfTillaegPris.getText()));
-        } else {
-            Service.createHotelTillaeg(lvwHotels.getSelectionModel().getSelectedItem(), txfTillaegNavn.getText(),
-                    Double.parseDouble(txfTillaegPris.getText()));
+            if (selected != null) {
+                Service.updateHotelTillaeg(selected, txfTillaegNavn.getText(),
+                        Double.parseDouble(txfTillaegPris.getText()));
+            } else {
+                Service.createHotelTillaeg(lvwHotels.getSelectionModel().getSelectedItem(), txfTillaegNavn.getText(),
+                        Double.parseDouble(txfTillaegPris.getText()));
+            }
+
+            lvwHotelTillaegsUpdate();
         }
-
-        lvwHotelTillaegsUpdate();
     }
 
     private void btnTillaegSletAction() {

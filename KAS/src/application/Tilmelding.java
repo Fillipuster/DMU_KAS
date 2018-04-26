@@ -4,109 +4,113 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Tilmelding {
-	private LocalDate ankomstDato;
-	private LocalDate afrejseDato;
-	private Person deltager;
-	private Person ledsager;
-	private Firma firma;
-	private Hotel hotel;
-	private ArrayList<Udflugt> udflugter = new ArrayList<>();
-	private ArrayList<HotelTillaeg> hotelTillaeg = new ArrayList<>();
+    private LocalDate ankomstDato;
+    private LocalDate afrejseDato;
+    private Person deltager;
+    private Person ledsager;
+    private Firma firma;
+    private Hotel hotel;
+    private ArrayList<Udflugt> udflugter = new ArrayList<>();
+    private ArrayList<HotelTillaeg> hotelTillaeg = new ArrayList<>();
+    private boolean speaker;
 
-	public Tilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato, Person deltager,
-			Person ledsager) {
-		this.ankomstDato = ankomstDato;
-		this.afrejseDato = afrejseDato;
-		this.deltager = deltager;
-		this.ledsager = ledsager;
-	}
+    public Tilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato, Person deltager,
+            Person ledsager, boolean speaker) {
+        this.ankomstDato = ankomstDato;
+        this.afrejseDato = afrejseDato;
+        this.deltager = deltager;
+        this.ledsager = ledsager;
+        this.speaker = speaker;
+    }
 
-	public Tilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato, Person deltager) {
-		this.ankomstDato = ankomstDato;
-		this.afrejseDato = afrejseDato;
-		this.deltager = deltager;
-	}
+    public LocalDate getAnkomstDato() {
+        return ankomstDato;
+    }
 
-	public LocalDate getAnkomstDato() {
-		return ankomstDato;
-	}
+    public void setAnkomstDato(LocalDate ankomstDato) {
+        this.ankomstDato = ankomstDato;
+    }
 
-	public void setAnkomstDato(LocalDate ankomstDato) {
-		this.ankomstDato = ankomstDato;
-	}
+    public LocalDate getAfrejseDato() {
+        return afrejseDato;
+    }
 
-	public LocalDate getAfrejseDato() {
-		return afrejseDato;
-	}
+    public void setAfrejseDato(LocalDate afrejseDato) {
+        this.afrejseDato = afrejseDato;
+    }
 
-	public void setAfrejseDato(LocalDate afrejseDato) {
-		this.afrejseDato = afrejseDato;
-	}
+    public Person getDeltager() {
+        return deltager;
+    }
 
-	public Person getDeltager() {
-		return deltager;
-	}
+    public void setDeltager(Person deltager) {
+        this.deltager = deltager;
+    }
 
-	public void setDeltager(Person deltager) {
-		this.deltager = deltager;
-	}
+    public Person getLedsager() {
+        return ledsager;
+    }
 
-	public Person getLedsager() {
-		return ledsager;
-	}
+    public void setLedsager(Person ledsager) {
+        this.ledsager = ledsager;
+    }
 
-	public void setLedsager(Person ledsager) {
-		this.ledsager = ledsager;
-	}
+    public Firma getFirma() {
+        return firma;
+    }
 
-	public Firma getFirma() {
-		return firma;
-	}
+    public void setFirma(Firma firma) {
+        this.firma = firma;
+    }
 
-	public void setFirma(Firma firma) {
-		this.firma = firma;
-	}
+    public Hotel getHotel() {
+        return hotel;
+    }
 
-	public Hotel getHotel() {
-		return hotel;
-	}
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+    public boolean isSpeaker() {
+        return speaker;
+    }
 
-	public void addTillaeg(HotelTillaeg tillaeg) {
-		this.hotelTillaeg.add(tillaeg);
-	}
+    public void setSpeaker(boolean speaker) {
+        this.speaker = speaker;
+    }
 
-	public void removeTillaeg(HotelTillaeg tillaeg) {
-		this.hotelTillaeg.remove(tillaeg);
-	}
+    public void addTillaeg(HotelTillaeg tillaeg) {
+        this.hotelTillaeg.add(tillaeg);
+    }
 
-	public void addUdflugt(Udflugt udflugt) {
-		this.udflugter.add(udflugt);
-	}
+    public void removeTillaeg(HotelTillaeg tillaeg) {
+        this.hotelTillaeg.remove(tillaeg);
+    }
 
-	public void removeUdflugt(Udflugt udflugt) {
-		this.udflugter.remove(udflugt);
-	}
+    public void addUdflugt(Udflugt udflugt) {
+        this.udflugter.add(udflugt);
+    }
 
-	public double totalPrice() {
-		double total = 0;
-		if (hotel != null) {
-			if (ledsager != null) {
-				total += hotel.getPrisDobbelt();
-			} else {
-				total += hotel.getPrisEnkelt();
-			}
-			for (HotelTillaeg ht : hotelTillaeg) {
-				total += ht.getPris();
-			}
-		}
-		for (Udflugt u : udflugter) {
-			total += u.getPris();
-		}
-		return total;
-	}
+    public void removeUdflugt(Udflugt udflugt) {
+        this.udflugter.remove(udflugt);
+    }
+
+    // public double totalPrice() {
+    // double total = 0;
+    // if (hotel != null) {
+    // if (ledsager != null) {
+    // total += hotel.getPrisDobbelt();
+    // } else {
+    // total += hotel.getPrisEnkelt();
+    // }
+    // for (HotelTillaeg ht : hotelTillaeg) {
+    // total += ht.getPris();
+    // }
+    // }
+    // for (Udflugt u : udflugter) {
+    // total += u.getPris();
+    // }
+    // return total;
+    // }
 
 }

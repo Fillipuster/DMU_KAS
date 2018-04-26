@@ -13,6 +13,7 @@ public class Konference {
     private double afgift;
     private ArrayList<Tilmelding> tilmeldte = new ArrayList<>();
     private ArrayList<Udflugt> udflugter = new ArrayList<>();
+    private ArrayList<Hotel> hoteller = new ArrayList<>();
 
     public Konference(String navn, String adresse, LocalDate fraDato, LocalDate tilDato, String beskrivelse,
             double afgift) {
@@ -86,6 +87,20 @@ public class Konference {
 
     public void removeUdflugt(Udflugt udflugt) {
         udflugter.remove(udflugt);
+    }
+
+    public ArrayList<Hotel> getHoteller() {
+        return new ArrayList<>(hoteller);
+    }
+
+    public void addHotel(Hotel hotel) {
+        if (!hoteller.contains(hotel)) {
+            hoteller.add(hotel);
+        }
+    }
+
+    public void removeHotel(Hotel hotel) {
+        hoteller.remove(hotel);
     }
 
     @Override

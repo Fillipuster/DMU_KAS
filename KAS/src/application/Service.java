@@ -66,8 +66,8 @@ public class Service {
     }
 
     public static Tilmelding createTilmelding(Konference konference, LocalDate ankomstDato, LocalDate afrejseDato,
-            Person deltager, Person ledsager) {
-        return new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager);
+            Person deltager, Person ledsager, boolean speaker) {
+        return new Tilmelding(konference, ankomstDato, afrejseDato, deltager, ledsager, speaker);
     }
 
     public static Udflugt createUdflugt(Konference konference, String navn, String beskrivelse, LocalDate dato,

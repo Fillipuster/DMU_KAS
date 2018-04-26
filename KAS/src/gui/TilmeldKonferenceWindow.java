@@ -1,7 +1,6 @@
 package gui;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import application.Hotel;
 import application.HotelTillaeg;
@@ -14,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -24,12 +24,10 @@ import javafx.stage.StageStyle;
 
 public class TilmeldKonferenceWindow extends Stage {
 
-    // TODO: Konferenceafgift
     // TODO: Speaker? checkbox
 
     protected Konference konference;
 
-    private DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     private ConfirmPopup confirm;
 
     public TilmeldKonferenceWindow(String title, Stage owner) {
@@ -56,13 +54,14 @@ public class TilmeldKonferenceWindow extends Stage {
     private String[] txtTxfPerson = { "John", "Doe", "Lupinvej 24", "12345678" };
     private Label[] lblPerson = new Label[4];
     private String[] txtLblPerson = { "Fornavn:", "Efternavn:", "Adresse:", "Telefon:" };
-    private CheckBox cbLedsager;
+    private CheckBox cbLedsager, cbSpeaker;
     private ComboBox<Hotel> cboxHotels;
     private ComboBox<HotelTillaeg> cboxTillaeg;
     private ListView<HotelTillaeg> lvwTillaeg;
     private ComboBox<Udflugt> cboxUdflugter;
     private ListView<Udflugt> lvwUdflugter;
     private Label lblTotalPrice;
+    private DatePicker dpFraDato, dpTilDato;
 
     private void initContent(GridPane pane) {
         pane.setGridLinesVisible(false);
@@ -85,17 +84,28 @@ public class TilmeldKonferenceWindow extends Stage {
             o += 2;
         }
 
+        dpFraDato = new DatePicker();
+        dpFraDato.setOnAction(event -> updateTotalPrice());
+        pane.add(dpFraDato, 0, 10);
+
+        dpTilDato = new DatePicker();
+        dpTilDato.setOnAction(event -> updateTotalPrice());
+        pane.add(dpTilDato, 0, 11);
+
+        cbSpeaker = new CheckBox("Foredragsholder?");
+        cbSpeaker.setOnAction(evnet -> updateTotalPrice());
+        pane.add(cbSpeaker, 0, 12);
+
         Label lblHotel = new Label("Hotel:");
-        pane.add(lblHotel, 0, 10);
+        pane.add(lblHotel, 0, 13);
 
         cboxHotels = new ComboBox<>();
-        cboxHotels.getItems().addAll(Service.getHotels());
         cboxHotels.setOnAction(event -> cboxHotelsAction());
-        pane.add(cboxHotels, 0, 11);
+        pane.add(cboxHotels, 0, 14);
 
         cbLedsager = new CheckBox("Medbringer ledsager?");
         cbLedsager.setOnAction(event -> cbLedsagerAction());
-        pane.add(cbLedsager, 0, 12);
+        pane.add(cbLedsager, 0, 15);
 
         // Column #2
 
@@ -163,16 +173,16 @@ public class TilmeldKonferenceWindow extends Stage {
         // Buttons
 
         Button btnCancel = new Button("Luk");
-        pane.add(btnCancel, 0, 13);
-        btnCancel.setOnAction(event -> btnCancelAction());
+        pane.add(btnCancel, 0, 16);
+        btnCancel.setOnAction(event -> hide());
 
         Button btnAccept = new Button("Tilmeld");
-        pane.add(btnAccept, 1, 13);
+        pane.add(btnAccept, 1, 16);
         btnAccept.setOnAction(event -> btnAcceptAction());
 
         // Total Price Label
         lblTotalPrice = new Label("TOTAL: 0.0");
-        pane.add(lblTotalPrice, 3, 13);
+        pane.add(lblTotalPrice, 3, 16);
 
     }
 
@@ -229,8 +239,8 @@ public class TilmeldKonferenceWindow extends Stage {
                         txfLedsager[3].getText());
             }
 
-            // TODO: Update LocalDate.now.
-            Service.createTilmelding(konference, LocalDate.now(), LocalDate.now(), deltager, ledsager);
+            Service.createTilmelding(konference, dpFraDato.getValue(), dpTilDato.getValue(), deltager, ledsager,
+                    cbSpeaker.isSelected());
 
             hide();
         } else {
@@ -243,7 +253,6 @@ public class TilmeldKonferenceWindow extends Stage {
         if (!lvwTillaeg.getItems().contains(cboxTillaeg.getSelectionModel().getSelectedItem())) {
             lvwTillaeg.getItems().add(cboxTillaeg.getSelectionModel().getSelectedItem());
         }
-        // cboxTillaeg.getSelectionModel().clearSelection(); // Causes problems?
 
         updateTotalPrice();
     }
@@ -274,11 +283,19 @@ public class TilmeldKonferenceWindow extends Stage {
             total += u.getPris();
         }
 
+        if (!cbSpeaker.isSelected()) {
+            total += (ChronoUnit.DAYS.between(dpFraDato.getValue(), dpTilDato.getValue()) + 1) * konference.getAfgift();
+        }
+
         lblTotalPrice.setText("TOTAL: " + total);
     }
 
-    private void btnCancelAction() {
-        hide();
+    // External
+    public void updateKonferenceBasedNodes() {
+        cboxHotels.getItems().removeAll(cboxHotels.getItems());
+        cboxHotels.getItems().addAll(konference.getHoteller());
+        dpFraDato.setValue(konference.getFraDato());
+        dpTilDato.setValue(konference.getTilDato());
     }
 
 }
