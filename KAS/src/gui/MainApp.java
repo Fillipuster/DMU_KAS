@@ -129,7 +129,7 @@ public class MainApp extends Application {
         }
 
         public void btnJoinAction() {
-            tilmeldKonferenceWindow.konference = cboxKonferencer.getSelectionModel().getSelectedItem();
+            tilmeldKonferenceWindow.setKonference(cboxKonferencer.getSelectionModel().getSelectedItem());
             tilmeldKonferenceWindow.updateKonferenceBasedNodes();
             tilmeldKonferenceWindow.showAndWait();
         }

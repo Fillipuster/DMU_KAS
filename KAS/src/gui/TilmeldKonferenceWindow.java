@@ -24,11 +24,17 @@ import javafx.stage.StageStyle;
 
 public class TilmeldKonferenceWindow extends Stage {
 
-    // TODO: Speaker? checkbox
+    // TODO: Speaker? Checkbox
 
-    protected Konference konference;
+    private Konference konference = null;
 
-    private ConfirmPopup confirm;
+    public void setKonference(Konference konference) {
+        this.konference = konference;
+    }
+
+    public Konference getKonference() {
+        return konference;
+    }
 
     public TilmeldKonferenceWindow(String title, Stage owner) {
         initOwner(owner);
@@ -38,22 +44,32 @@ public class TilmeldKonferenceWindow extends Stage {
         setMinWidth(200);
         setResizable(false);
 
-        confirm = new ConfirmPopup("Accepter Tilmelding", owner,
-                "Er du sikker på at du vil\ntilmelde dig konferencen?");
+        buildWindows(owner);
 
         setTitle(title);
         GridPane pane = new GridPane();
+        pane.setGridLinesVisible(false);
+        pane.setPadding(new Insets(20));
+        pane.setHgap(10);
+        pane.setVgap(10);
         initContent(pane);
 
         Scene scene = new Scene(pane);
         setScene(scene);
     }
 
-    private TextField[] txfDeltager = new TextField[4];
-    private TextField[] txfLedsager = new TextField[4];
-    private String[] txtTxfPerson = { "John", "Doe", "Lupinvej 24", "12345678" };
-    private Label[] lblPerson = new Label[4];
-    private String[] txtLblPerson = { "Fornavn:", "Efternavn:", "Adresse:", "Telefon:" };
+    // Window Fields
+    private ConfirmPopup confirm;
+
+    // External Window Creation
+    private void buildWindows(Stage owner) {
+        confirm = new ConfirmPopup("Accepter Tilmelding", owner,
+                "Er du sikker på at du vil\ntilmelde dig konferencen?");
+    }
+
+    // Node Fields
+    private TextField txfFornavn, txfEfternavn, txfAdresse, txfTelefon, txfLedsagerFornavn, txfLedsagerEfternavn,
+            txfLedsagerAdresse, txfLedsagerTelefon;
     private CheckBox cbLedsager, cbSpeaker;
     private ComboBox<Hotel> cboxHotels;
     private ComboBox<HotelTillaeg> cboxTillaeg;
@@ -64,25 +80,18 @@ public class TilmeldKonferenceWindow extends Stage {
     private DatePicker dpFraDato, dpTilDato;
 
     private void initContent(GridPane pane) {
-        pane.setGridLinesVisible(false);
-        pane.setPadding(new Insets(20));
-        pane.setHgap(10);
-        pane.setVgap(10);
-
         // Column #1
-        // TODO: Tilføj pris i alt.
+        txfFornavn = new TextField("Fornavn");
+        pane.add(txfFornavn, 0, 0);
 
-        Label lblRubrikDeltager = new Label("Indtast informationer (deltager):");
-        pane.add(lblRubrikDeltager, 0, 0);
+        txfEfternavn = new TextField("Efternavn");
+        pane.add(txfEfternavn, 0, 1);
 
-        int o = 1;
-        for (int i = 0; i < 4; i++) {
-            lblPerson[i] = new Label(txtLblPerson[i]);
-            pane.add(lblPerson[i], 0, o);
-            txfDeltager[i] = new TextField(txtTxfPerson[i]);
-            pane.add(txfDeltager[i], 0, o + 1);
-            o += 2;
-        }
+        txfAdresse = new TextField("Adresse");
+        pane.add(txfAdresse, 0, 2);
+
+        txfTelefon = new TextField("Telefon Nr.");
+        pane.add(txfTelefon, 0, 3);
 
         dpFraDato = new DatePicker();
         dpFraDato.setOnAction(event -> updateTotalPrice());
