@@ -110,22 +110,4 @@ public class Tilmelding {
         return str;
     }
 
-    // public double totalPrice() {
-    // double total = 0;
-    // if (hotel != null) {
-    // if (ledsager != null) {
-    // total += hotel.getPrisDobbelt();
-    // } else {
-    // total += hotel.getPrisEnkelt();
-    // }
-    // for (HotelTillaeg ht : hotelTillaeg) {
-    // total += ht.getPris();
-    // }
-    // }
-    // for (Udflugt u : udflugter) {
-    // total += u.getPris();
-    // }
-    // return total;
-    // }
-
 }
