@@ -72,8 +72,8 @@ public class TilmeldKonferenceWindow extends Stage {
 
     // Node Fields
     private TextField txfFornavn, txfEfternavn, txfAdresse, txfTelefon, txfLedsagerFornavn, txfLedsagerEfternavn,
-            txfLedsagerAdresse, txfLedsagerTelefon;
-    private CheckBox cbLedsager, cbSpeaker;
+            txfLedsagerAdresse, txfLedsagerTelefon, txfFirmaNavn, txfFirmaTlf;
+    private CheckBox cbLedsager, cbSpeaker, cbFirma;
     private ComboBox<Hotel> cboxHotels;
     private ComboBox<HotelTillaeg> cboxTillaeg;
     private ListView<HotelTillaeg> lvwTillaeg;
@@ -96,31 +96,43 @@ public class TilmeldKonferenceWindow extends Stage {
         txfTelefon = new TextField("Telefon Nr.");
         pane.add(txfTelefon, 0, 3);
 
-        Service.label(pane, "Start dato:", 0, 4);
+        cbFirma = new CheckBox("Representerer firma?");
+        cbFirma.setOnAction(event -> cbFirmaAction());
+        pane.add(cbFirma, 0, 4);
+
+        txfFirmaNavn = new TextField("Firmanavn");
+        txfFirmaNavn.setDisable(true);
+        pane.add(txfFirmaNavn, 0, 5);
+
+        txfFirmaTlf = new TextField("Firma tlf.");
+        txfFirmaTlf.setDisable(true);
+        pane.add(txfFirmaTlf, 0, 6);
+
+        Service.label(pane, "Start dato:", 0, 7);
         dpFraDato = new DatePicker();
         dpFraDato.setOnAction(event -> updateTotalPrice());
-        pane.add(dpFraDato, 0, 5);
+        pane.add(dpFraDato, 0, 8);
 
-        Service.label(pane, "Slut dato:", 0, 6);
+        Service.label(pane, "Slut dato:", 0, 9);
         dpTilDato = new DatePicker();
         dpTilDato.setOnAction(event -> updateTotalPrice());
-        pane.add(dpTilDato, 0, 7);
+        pane.add(dpTilDato, 0, 10);
 
-        Service.label(pane, "Vælg hotel:", 0, 8);
+        Service.label(pane, "Vælg hotel:", 0, 11);
         cboxHotels = new ComboBox<>();
         cboxHotels.setOnAction(event -> cboxHotelsAction());
-        pane.add(cboxHotels, 0, 9);
+        pane.add(cboxHotels, 0, 12);
 
         cbSpeaker = new CheckBox("Foredragsholder?");
         cbSpeaker.setOnAction(evnet -> updateTotalPrice());
-        pane.add(cbSpeaker, 0, 10);
+        pane.add(cbSpeaker, 0, 13);
 
         cbLedsager = new CheckBox("Medbringer ledsager?");
         cbLedsager.setOnAction(event -> cbLedsagerAction());
-        pane.add(cbLedsager, 0, 11);
+        pane.add(cbLedsager, 0, 14);
 
         Button btnCancel = new Button("Luk");
-        pane.add(btnCancel, 0, 13);
+        pane.add(btnCancel, 0, 16);
         btnCancel.setOnAction(event -> hide());
 
         // Column #1
@@ -141,7 +153,7 @@ public class TilmeldKonferenceWindow extends Stage {
         pane.add(txfLedsagerTelefon, 1, 3);
 
         Button btnAccept = new Button("Tilmeld");
-        pane.add(btnAccept, 1, 13);
+        pane.add(btnAccept, 1, 16);
         btnAccept.setOnAction(event -> btnAcceptAction());
 
         // Column #2
@@ -281,6 +293,18 @@ public class TilmeldKonferenceWindow extends Stage {
         updateTotalPrice();
     }
 
+    private void cbFirmaAction() {
+        if (cbFirma.isSelected()) {
+            txfFirmaNavn.setDisable(false);
+            txfFirmaTlf.setDisable(false);
+        } else {
+            txfFirmaNavn.setDisable(true);
+            txfFirmaTlf.setDisable(true);
+        }
+
+        updateTotalPrice();
+    }
+
     private void updateTotalPrice() {
         double total = 0;
 
@@ -298,7 +322,7 @@ public class TilmeldKonferenceWindow extends Stage {
             total += u.getPris();
         }
 
-        if (!cbSpeaker.isSelected()) {
+        if (!cbSpeaker.isSelected() && !cbFirma.isSelected()) {
             total += (ChronoUnit.DAYS.between(dpFraDato.getValue(), dpTilDato.getValue()) + 1) * konference.getAfgift();
         }
 
