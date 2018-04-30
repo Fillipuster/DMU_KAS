@@ -84,19 +84,28 @@ public class TilmeldingslisteWindow extends Stage {
 
     // Node Actions
     private void cboxHotelsAction() {
-        lvwHotelTilmeldings.getItems().removeAll(lvwHotelTilmeldings.getItems());
-        for (Tilmelding t : konference.getTilmeldte()) {
-            if (t.getHotel() == cboxHotels.getSelectionModel().getSelectedItem()) {
-                lvwHotelTilmeldings.getItems().add(t);
+        Hotel selected = cboxHotels.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            lvwHotelTilmeldings.getItems().removeAll(lvwHotelTilmeldings.getItems());
+
+            for (Tilmelding t : konference.getTilmeldte()) {
+                if (t.getHotel() == selected) {
+                    lvwHotelTilmeldings.getItems().add(t);
+                }
             }
         }
     }
 
     private void cboxUdflugtsAction() {
-        lvwUdflugtTilmeldings.getItems().removeAll(lvwUdflugtTilmeldings.getItems());
-        for (Tilmelding t : konference.getTilmeldte()) {
-            if (t.getUdflugter().contains(cboxUdflugts.getSelectionModel().getSelectedItem())) {
-                lvwUdflugtTilmeldings.getItems().add(t);
+        Udflugt selected = cboxUdflugts.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            lvwUdflugtTilmeldings.getItems().removeAll(lvwUdflugtTilmeldings.getItems());
+            for (Tilmelding t : konference.getTilmeldte()) {
+                if (t.getUdflugter().contains(selected)) {
+                    lvwUdflugtTilmeldings.getItems().add(t);
+                }
             }
         }
     }

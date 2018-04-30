@@ -99,6 +99,17 @@ public class Tilmelding {
         this.udflugter.remove(udflugt);
     }
 
+    @Override
+    public String toString() {
+        String str = "";
+        str += deltager.getFornavn() + " " + deltager.getEfternavn() + "\n";
+        if (ledsager != null) {
+            str += ledsager.getFornavn() + " " + ledsager.getEfternavn();
+        }
+
+        return str;
+    }
+
     // public double totalPrice() {
     // double total = 0;
     // if (hotel != null) {

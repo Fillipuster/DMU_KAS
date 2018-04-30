@@ -4,7 +4,9 @@ import java.time.LocalDate;
 
 import application.Hotel;
 import application.Konference;
+import application.Person;
 import application.Service;
+import application.Tilmelding;
 import application.Udflugt;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,13 +19,22 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+    private Stage ownerStage;
+
     private static void createTestData() {
         Hotel h = Service.createHotel("Testotel", "Ham Road", 60, 100);
         Konference k = Service.createKonference("Baconferencen", "Ham Road", LocalDate.now(), LocalDate.now(),
                 "Det handler om Bacon!", 120);
         k.addHotel(h);
         Service.createHotelTillaeg(h, "Wifi", 40);
-        Service.createUdflugt(k, "Baconspisning", "Mmmmm....", LocalDate.now(), 100, true);
+        Udflugt u = Service.createUdflugt(k, "Baconspisning", "Mmmmm....", LocalDate.now(), 100, true);
+
+        Person d = Service.createPerson("Jens", "Vejmand", "Lupinvej 23", "82739182");
+        Person l = Service.createPerson("Lone", "Vejmand", "Lupinvej 24", "98371927");
+
+        Tilmelding t = Service.createTilmelding(k, LocalDate.now(), LocalDate.now(), d, l, false);
+        t.setHotel(h);
+        t.addUdflugt(u);
     }
 
     public static void main(String[] args) {
@@ -40,6 +51,8 @@ public class MainApp extends Application {
         pane.setHgap(10);
         pane.setVgap(10);
         initContent(pane);
+
+        ownerStage = stage;
 
         hoteladminWindow = new HoteladminWindow("Hoteladministration", stage);
         tilmeldKonferenceWindow = new TilmeldKonferenceWindow("Tilmeld Konference", stage);
@@ -108,7 +121,9 @@ public class MainApp extends Application {
         }
 
         public void btnJoinAction() {
-            tilmeldKonferenceWindow.setKonference(cboxKonferencer.getSelectionModel().getSelectedItem());
+            Konference selected = cboxKonferencer.getSelectionModel().getSelectedItem();
+            tilmeldKonferenceWindow = new TilmeldKonferenceWindow(selected.getNavn() + " Tilmelding", ownerStage);
+            tilmeldKonferenceWindow.setKonference(selected);
             tilmeldKonferenceWindow.showAndWait();
         }
 

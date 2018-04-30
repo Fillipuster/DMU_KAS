@@ -7,6 +7,7 @@ import application.HotelTillaeg;
 import application.Konference;
 import application.Person;
 import application.Service;
+import application.Tilmelding;
 import application.Udflugt;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -195,11 +196,15 @@ public class TilmeldKonferenceWindow extends Stage {
     }
 
     private void cboxHotelsAction() {
-        cboxTillaeg.getItems().removeAll(cboxTillaeg.getItems());
-        cboxTillaeg.getItems().addAll(cboxHotels.getSelectionModel().getSelectedItem().getHotelTillaeg());
-        cboxTillaeg.setDisable(false);
+        Hotel selected = cboxHotels.getSelectionModel().getSelectedItem();
 
-        updateTotalPrice();
+        if (selected != null) {
+            cboxTillaeg.getItems().removeAll(cboxTillaeg.getItems());
+            cboxTillaeg.getItems().addAll(selected.getHotelTillaeg());
+            cboxTillaeg.setDisable(false);
+
+            updateTotalPrice();
+        }
     }
 
     private void cbLedsagerAction() {
@@ -230,16 +235,27 @@ public class TilmeldKonferenceWindow extends Stage {
         confirm.showAndWait();
         Person deltager = null;
         if (confirm.confirmed) {
-            Service.createPerson(txfFornavn.getText(), txfEfternavn.getText(), txfAdresse.getText(),
+            deltager = Service.createPerson(txfFornavn.getText(), txfEfternavn.getText(), txfAdresse.getText(),
                     txfTelefon.getText());
             Person ledsager = null;
             if (cbLedsager.isSelected()) {
-                Service.createPerson(txfLedsagerFornavn.getText(), txfLedsagerEfternavn.getText(),
+                ledsager = Service.createPerson(txfLedsagerFornavn.getText(), txfLedsagerEfternavn.getText(),
                         txfLedsagerAdresse.getText(), txfLedsagerTelefon.getText());
             }
 
-            Service.createTilmelding(konference, dpFraDato.getValue(), dpTilDato.getValue(), deltager, ledsager,
-                    cbSpeaker.isSelected());
+            Tilmelding t = Service.createTilmelding(konference, dpFraDato.getValue(), dpTilDato.getValue(), deltager,
+                    ledsager, cbSpeaker.isSelected());
+
+            Hotel selectedHotel = cboxHotels.getSelectionModel().getSelectedItem();
+            if (selectedHotel != null) {
+                t.setHotel(selectedHotel);
+            }
+            for (HotelTillaeg ht : lvwTillaeg.getItems()) {
+                t.addTillaeg(ht);
+            }
+            for (Udflugt u : lvwUdflugter.getItems()) {
+                t.addUdflugt(u);
+            }
 
             hide();
         } else {

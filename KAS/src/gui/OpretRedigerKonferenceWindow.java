@@ -36,6 +36,16 @@ public class OpretRedigerKonferenceWindow extends Stage {
 
         btnGem.setDisable(konference != null);
         btnOpdater.setDisable(konference == null);
+
+        if (konference != null) {
+            lvwUdflugts.getItems().addAll(konference.getUdflugter());
+            txfNavn.setText(konference.getNavn());
+            txfAdresse.setText(konference.getAdresse());
+            txfBeskrivelse.setText(konference.getBeskrivelse());
+            txfAfgift.setText("" + konference.getAfgift());
+            dpFraDato.setValue(konference.getFraDato());
+            dpTilDato.setValue(konference.getTilDato());
+        }
     }
 
     public Konference getKonference() {
@@ -210,8 +220,10 @@ public class OpretRedigerKonferenceWindow extends Stage {
     }
 
     private void btnGemAction() {
-        setKonference(Service.createKonference(txfNavn.getText(), txfAdresse.getText(), dpFraDato.getValue(),
-                dpTilDato.getValue(), txfBeskrivelse.getText(), Double.parseDouble(txfAfgift.getText())));
+        if (konference == null) {
+            setKonference(Service.createKonference(txfNavn.getText(), txfAdresse.getText(), dpFraDato.getValue(),
+                    dpTilDato.getValue(), txfBeskrivelse.getText(), Double.parseDouble(txfAfgift.getText())));
+        }
     }
 
     private void btnOpdaterAction() {
