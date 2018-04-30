@@ -2,6 +2,8 @@ package gui;
 
 import application.Hotel;
 import application.Konference;
+import application.Person;
+import application.Service;
 import application.Tilmelding;
 import application.Udflugt;
 import javafx.geometry.Insets;
@@ -28,6 +30,9 @@ public class TilmeldingslisteWindow extends Stage {
 
         cboxUdflugts.getItems().removeAll(cboxUdflugts.getItems());
         cboxUdflugts.getItems().addAll(this.konference.getUdflugter());
+
+        lvwHotelTilmeldings.getItems().removeAll(lvwHotelTilmeldings.getItems());
+        lvwUdflugtPersoner.getItems().removeAll(lvwUdflugtPersoner.getItems());
     }
 
     public Konference getKonference() {
@@ -55,31 +60,35 @@ public class TilmeldingslisteWindow extends Stage {
     }
 
     // Node Fields
-    private ListView<Tilmelding> lvwKonferenceTilmeldings, lvwHotelTilmeldings, lvwUdflugtTilmeldings;
+    private ListView<Tilmelding> lvwKonferenceTilmeldings, lvwHotelTilmeldings;
+    private ListView<Person> lvwUdflugtPersoner;
     private ComboBox<Hotel> cboxHotels;
     private ComboBox<Udflugt> cboxUdflugts;
 
     // Content Initialization
     private void initContent(GridPane pane) {
         // Column #0
+        Service.label(pane, "Konferencens tilmeldinger:", 0, 0);
         lvwKonferenceTilmeldings = new ListView<>();
-        pane.add(lvwKonferenceTilmeldings, 0, 1);
+        pane.add(lvwKonferenceTilmeldings, 0, 2);
 
         // Column #1
+        Service.label(pane, "Vælg hotel for tilmeldingsliste:", 1, 0);
         cboxHotels = new ComboBox<>();
         cboxHotels.setOnAction(event -> cboxHotelsAction());
-        pane.add(cboxHotels, 1, 0);
+        pane.add(cboxHotels, 1, 1);
 
         lvwHotelTilmeldings = new ListView<>();
-        pane.add(lvwHotelTilmeldings, 1, 1);
+        pane.add(lvwHotelTilmeldings, 1, 2);
 
         // Column #2
+        Service.label(pane, "Vælg udflugt for tilmeldingsliste:", 2, 0);
         cboxUdflugts = new ComboBox<>();
         cboxUdflugts.setOnAction(event -> cboxUdflugtsAction());
-        pane.add(cboxUdflugts, 2, 0);
+        pane.add(cboxUdflugts, 2, 1);
 
-        lvwUdflugtTilmeldings = new ListView<>();
-        pane.add(lvwUdflugtTilmeldings, 2, 1);
+        lvwUdflugtPersoner = new ListView<>();
+        pane.add(lvwUdflugtPersoner, 2, 2);
     }
 
     // Node Actions
@@ -101,10 +110,10 @@ public class TilmeldingslisteWindow extends Stage {
         Udflugt selected = cboxUdflugts.getSelectionModel().getSelectedItem();
 
         if (selected != null) {
-            lvwUdflugtTilmeldings.getItems().removeAll(lvwUdflugtTilmeldings.getItems());
+            lvwUdflugtPersoner.getItems().removeAll(lvwUdflugtPersoner.getItems());
             for (Tilmelding t : konference.getTilmeldte()) {
                 if (t.getUdflugter().contains(selected)) {
-                    lvwUdflugtTilmeldings.getItems().add(t);
+                    lvwUdflugtPersoner.getItems().add(t.getLedsager());
                 }
             }
         }

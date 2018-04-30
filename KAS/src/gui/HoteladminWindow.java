@@ -44,54 +44,56 @@ public class HoteladminWindow extends Stage {
     private void initContent(GridPane pane) {
 
         // Column #0
+        Service.label(pane, "Ændring af hoteller:", 0, 0);
         lvwHotels = new ListView<>();
         lvwHotels.setOnMouseClicked(event -> lvwHotelsOnClick());
-        pane.add(lvwHotels, 0, 0, 1, 8);
+        pane.add(lvwHotels, 0, 1, 1, 8);
 
         Button btnLuk = new Button("Luk");
         btnLuk.setOnAction(event -> hide());
-        pane.add(btnLuk, 0, 9);
+        pane.add(btnLuk, 0, 10);
 
         // Column #1
         txfNavn = new TextField("Navn");
-        pane.add(txfNavn, 1, 0);
+        pane.add(txfNavn, 1, 1);
 
         txfAdresse = new TextField("Adresse");
-        pane.add(txfAdresse, 1, 1);
+        pane.add(txfAdresse, 1, 2);
 
         txfPrisEnkelt = new TextField("Pris Enkelt");
-        pane.add(txfPrisEnkelt, 1, 2);
+        pane.add(txfPrisEnkelt, 1, 3);
 
         txfPrisDobbelt = new TextField("Pris Dobbelt");
-        pane.add(txfPrisDobbelt, 1, 3);
+        pane.add(txfPrisDobbelt, 1, 4);
 
         Button btnOpretRediger = new Button("Opret/Rediger");
         btnOpretRediger.setOnAction(event -> btnOpretRedigerAction());
-        pane.add(btnOpretRediger, 1, 5);
+        pane.add(btnOpretRediger, 1, 6);
 
         Button btnSlet = new Button("Slet");
         btnSlet.setOnAction(event -> btnSletAction());
-        pane.add(btnSlet, 1, 6);
+        pane.add(btnSlet, 1, 7);
 
         // Column #2
+        Service.label(pane, "Ændring af hotel-tillæg:", 2, 0);
         lvwHotelTillaegs = new ListView<>();
         lvwHotelTillaegs.setOnMouseClicked(event -> lvwHotelTillaegsOnClick());
-        pane.add(lvwHotelTillaegs, 2, 0, 1, 8);
+        pane.add(lvwHotelTillaegs, 2, 1, 1, 8);
 
         // Colimn #3
         txfTillaegNavn = new TextField("Navn");
-        pane.add(txfTillaegNavn, 3, 0);
+        pane.add(txfTillaegNavn, 3, 1);
 
         txfTillaegPris = new TextField("Pris");
-        pane.add(txfTillaegPris, 3, 1);
+        pane.add(txfTillaegPris, 3, 2);
 
         Button btnTillaegOpretRediger = new Button("Opret/Rediger");
         btnTillaegOpretRediger.setOnAction(event -> btnTillaegOpretRedigerAction());
-        pane.add(btnTillaegOpretRediger, 3, 3);
+        pane.add(btnTillaegOpretRediger, 3, 6);
 
         Button btnTillaegSlet = new Button("Slet");
         btnTillaegSlet.setOnAction(event -> btnTillaegSletAction());
-        pane.add(btnTillaegSlet, 3, 4);
+        pane.add(btnTillaegSlet, 3, 7);
 
         lvwHotelsUpdate();
 

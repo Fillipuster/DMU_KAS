@@ -9,11 +9,13 @@ import application.Service;
 import application.Tilmelding;
 import application.Udflugt;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -81,7 +83,15 @@ public class MainApp extends Application {
         cboxKonferencer.setMinWidth(400);
         pane.add(cboxKonferencer, 0, 1, 3, 1);
         controller.updateKonferencerListe();
-        cboxKonferencer.setOnAction(event -> controller.cbKonferencerAction());
+        cboxKonferencer.setOnAction(event -> controller.cboxKonferencerAction());
+        cboxKonferencer.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent event) {
+                cboxKonferencer.getSelectionModel().select(null);
+                btnJoin.setDisable(true);
+                btnListe.setDisable(true);
+            }
+        });
 
         btnJoin = new Button("Tilmeld Konference");
         pane.add(btnJoin, 4, 1);
@@ -105,10 +115,19 @@ public class MainApp extends Application {
     }
 
     private class Controller {
+        public void cboxKonferencerAction() {
+            btnJoin.setDisable(false);
+            btnListe.setDisable(false);
+        }
+
         public void btnCreateAction() {
+            // NOTE: Konferencen der skal redigeres skal vælges fra combo boxen hver gang
+            // før redigering. Eller vil OpretRedigerKonferenceWindow ikke æde konferencen
+            // fra cbox'en.
             opretRedigerKonferenceWindow.updateHotelList();
-            if (cboxKonferencer.getSelectionModel().getSelectedItem() != null) {
-                opretRedigerKonferenceWindow.setKonference(cboxKonferencer.getSelectionModel().getSelectedItem());
+            Konference selected = cboxKonferencer.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                opretRedigerKonferenceWindow.setKonference(selected);
             }
             opretRedigerKonferenceWindow.showAndWait();
             if (opretRedigerKonferenceWindow.getKonference() != null) {
@@ -129,10 +148,6 @@ public class MainApp extends Application {
 
         private void updateKonferencerListe() {
             cboxKonferencer.getItems().setAll(Service.getKonferencer());
-        }
-
-        private void cbKonferencerAction() {
-            btnJoin.setDisable(false);
         }
 
         private void btnListeAction() {

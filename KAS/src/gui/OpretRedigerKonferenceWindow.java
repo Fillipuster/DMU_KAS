@@ -26,23 +26,36 @@ public class OpretRedigerKonferenceWindow extends Stage {
     public void setKonference(Konference konference) {
         this.konference = konference;
         lvwUdflugts.setDisable(konference == null);
+
         txfUdflugtNavn.setDisable(konference == null);
         txfUdflugtBeskrivelse.setDisable(konference == null);
         txfUdflugtPris.setDisable(konference == null);
+
         btnUdflugtOpretRediger.setDisable(konference == null);
         btnUdflugtSlet.setDisable(konference == null);
+
         dpUdflugtDato.setDisable(konference == null);
+
         cbUdflugtFrokost.setDisable(konference == null);
 
         btnGem.setDisable(konference != null);
         btnOpdater.setDisable(konference == null);
 
         if (konference != null) {
+            // cboxHotels
+
+            lvwUdflugts.getItems().removeAll(lvwUdflugts.getItems());
             lvwUdflugts.getItems().addAll(konference.getUdflugter());
+
+            lvwHotels.getItems().removeAll(lvwHotels.getItems());
+            System.out.println(konference.getHoteller());
+            lvwHotels.getItems().addAll(konference.getHoteller());
+
             txfNavn.setText(konference.getNavn());
             txfAdresse.setText(konference.getAdresse());
             txfBeskrivelse.setText(konference.getBeskrivelse());
             txfAfgift.setText("" + konference.getAfgift());
+
             dpFraDato.setValue(konference.getFraDato());
             dpTilDato.setValue(konference.getTilDato());
         }
