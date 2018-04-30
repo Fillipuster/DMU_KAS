@@ -3,6 +3,8 @@ package application;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import storage.Storage;
 
 public class Service {
@@ -99,5 +101,12 @@ public class Service {
         konference.setTilDato(tilDato);
         konference.setBeskrivelse(beskrivelse);
         konference.setAfgift(afgift);
+    }
+
+    // GUI Utils
+    public static Label label(GridPane pane, String label, int x, int y) {
+        Label l = new Label(label);
+        pane.add(l, x, y);
+        return l;
     }
 }

@@ -24,12 +24,14 @@ import javafx.stage.StageStyle;
 
 public class TilmeldKonferenceWindow extends Stage {
 
-    // TODO: Speaker? Checkbox
-
     private Konference konference = null;
 
     public void setKonference(Konference konference) {
         this.konference = konference;
+        cboxHotels.getItems().removeAll(cboxHotels.getItems());
+        cboxHotels.getItems().addAll(konference.getHoteller());
+        dpFraDato.setValue(konference.getFraDato());
+        dpTilDato.setValue(konference.getTilDato());
     }
 
     public Konference getKonference() {
@@ -80,7 +82,7 @@ public class TilmeldKonferenceWindow extends Stage {
     private DatePicker dpFraDato, dpTilDato;
 
     private void initContent(GridPane pane) {
-        // Column #1
+        // Column #0
         txfFornavn = new TextField("Fornavn");
         pane.add(txfFornavn, 0, 0);
 
@@ -93,106 +95,91 @@ public class TilmeldKonferenceWindow extends Stage {
         txfTelefon = new TextField("Telefon Nr.");
         pane.add(txfTelefon, 0, 3);
 
+        Service.label(pane, "Start dato:", 0, 4);
         dpFraDato = new DatePicker();
         dpFraDato.setOnAction(event -> updateTotalPrice());
-        pane.add(dpFraDato, 0, 10);
+        pane.add(dpFraDato, 0, 5);
 
+        Service.label(pane, "Slut dato:", 0, 6);
         dpTilDato = new DatePicker();
         dpTilDato.setOnAction(event -> updateTotalPrice());
-        pane.add(dpTilDato, 0, 11);
+        pane.add(dpTilDato, 0, 7);
+
+        Service.label(pane, "Vælge hotel:", 0, 8);
+        cboxHotels = new ComboBox<>();
+        cboxHotels.setOnAction(event -> cboxHotelsAction());
+        pane.add(cboxHotels, 0, 9);
 
         cbSpeaker = new CheckBox("Foredragsholder?");
         cbSpeaker.setOnAction(evnet -> updateTotalPrice());
-        pane.add(cbSpeaker, 0, 12);
-
-        Label lblHotel = new Label("Hotel:");
-        pane.add(lblHotel, 0, 13);
-
-        cboxHotels = new ComboBox<>();
-        cboxHotels.setOnAction(event -> cboxHotelsAction());
-        pane.add(cboxHotels, 0, 14);
+        pane.add(cbSpeaker, 0, 10);
 
         cbLedsager = new CheckBox("Medbringer ledsager?");
         cbLedsager.setOnAction(event -> cbLedsagerAction());
-        pane.add(cbLedsager, 0, 15);
+        pane.add(cbLedsager, 0, 11);
+
+        Button btnCancel = new Button("Luk");
+        pane.add(btnCancel, 0, 13);
+        btnCancel.setOnAction(event -> hide());
+
+        // Column #1
+        txfLedsagerFornavn = new TextField("Ledsager Fornavn");
+        txfLedsagerFornavn.setDisable(true);
+        pane.add(txfLedsagerFornavn, 1, 0);
+
+        txfLedsagerEfternavn = new TextField("Ledsager Efternavn");
+        txfLedsagerEfternavn.setDisable(true);
+        pane.add(txfLedsagerEfternavn, 1, 1);
+
+        txfLedsagerAdresse = new TextField("Ledsager Adresse");
+        txfLedsagerAdresse.setDisable(true);
+        pane.add(txfLedsagerAdresse, 1, 2);
+
+        txfLedsagerTelefon = new TextField("Ledsager Telefon Nr.");
+        txfLedsagerTelefon.setDisable(true);
+        pane.add(txfLedsagerTelefon, 1, 3);
+
+        Button btnAccept = new Button("Tilmeld");
+        pane.add(btnAccept, 1, 13);
+        btnAccept.setOnAction(event -> btnAcceptAction());
 
         // Column #2
-
-        Label lblRubrikLedsager = new Label("Indtast informationer (ledsager):");
-        pane.add(lblRubrikLedsager, 1, 0);
-
-        o = 1;
-        for (int i = 0; i < 4; i++) {
-            lblPerson[i] = new Label(txtLblPerson[i]);
-            pane.add(lblPerson[i], 1, o);
-            txfLedsager[i] = new TextField(txtTxfPerson[i]);
-            pane.add(txfLedsager[i], 1, o + 1);
-            txfLedsager[i].setDisable(true);
-            o += 2;
-        }
-
-        // Column #3
-
-        Label lblRubrikHotel = new Label("Vælg hotel-tillæg:");
-        pane.add(lblRubrikHotel, 2, 0);
-
-        Label lblHotelTillaeg = new Label("Mulige tillæg:");
-        pane.add(lblHotelTillaeg, 2, 1);
+        Service.label(pane, "Vælg hotel-tillæg:", 2, 0);
 
         cboxTillaeg = new ComboBox<>();
         cboxTillaeg.setDisable(true);
         cboxTillaeg.setOnAction(event -> cboxTillaegAction());
-        pane.add(cboxTillaeg, 2, 2);
-
-        Label lblTillaegList = new Label("Valgte Tillæg:");
-        pane.add(lblTillaegList, 2, 3);
+        pane.add(cboxTillaeg, 2, 1);
 
         lvwTillaeg = new ListView<>();
         lvwTillaeg.setDisable(true);
         lvwTillaeg.setMaxHeight(200);
-        pane.add(lvwTillaeg, 2, 4, 1, 8);
+        pane.add(lvwTillaeg, 2, 2, 1, 8);
 
         Button btnRemoveTilaeg = new Button("Slet");
         btnRemoveTilaeg.setOnAction(event -> btnRemoveTilaegAction());
-        pane.add(btnRemoveTilaeg, 2, 12);
+        pane.add(btnRemoveTilaeg, 2, 10);
 
-        // Column #4
-
-        Label lblRubrikUdflugt = new Label("Vælg ledsager-udflugter:");
-        pane.add(lblRubrikUdflugt, 3, 0);
-
-        Label lblUdflugter = new Label("Mulige udflugter:");
-        pane.add(lblUdflugter, 3, 1);
+        // Column #3
+        Service.label(pane, "Vælge udflugter:", 3, 0);
 
         cboxUdflugter = new ComboBox<>();
         cboxUdflugter.setDisable(true);
         cboxUdflugter.setOnAction(event -> cboxUdflugterAction());
-        pane.add(cboxUdflugter, 3, 2);
+        pane.add(cboxUdflugter, 3, 1);
 
         lvwUdflugter = new ListView<>();
         lvwUdflugter = new ListView<>();
         lvwUdflugter.setDisable(true);
         lvwUdflugter.setMaxHeight(200);
-        pane.add(lvwUdflugter, 3, 4, 1, 8);
+        pane.add(lvwUdflugter, 3, 2, 1, 8);
 
         Button btnRemoveUdflugt = new Button("Slet");
         btnRemoveUdflugt.setOnAction(event -> btnRemoveUdflugtAction());
-        pane.add(btnRemoveUdflugt, 3, 12);
+        pane.add(btnRemoveUdflugt, 3, 10);
 
-        // Buttons
-
-        Button btnCancel = new Button("Luk");
-        pane.add(btnCancel, 0, 16);
-        btnCancel.setOnAction(event -> hide());
-
-        Button btnAccept = new Button("Tilmeld");
-        pane.add(btnAccept, 1, 16);
-        btnAccept.setOnAction(event -> btnAcceptAction());
-
-        // Total Price Label
         lblTotalPrice = new Label("TOTAL: 0.0");
-        pane.add(lblTotalPrice, 3, 16);
-
+        pane.add(lblTotalPrice, 3, 13);
     }
 
     private void btnRemoveTilaegAction() {
@@ -218,17 +205,19 @@ public class TilmeldKonferenceWindow extends Stage {
         cboxUdflugter.getItems().addAll(konference.getUdflugter());
 
         if (cbLedsager.isSelected()) {
-            for (TextField tf : txfLedsager) {
-                tf.setDisable(false);
-                lvwUdflugter.setDisable(false);
-                cboxUdflugter.setDisable(false);
-            }
+            lvwUdflugter.setDisable(false);
+            cboxUdflugter.setDisable(false);
+            txfLedsagerFornavn.setDisable(false);
+            txfLedsagerEfternavn.setDisable(false);
+            txfLedsagerAdresse.setDisable(false);
+            txfLedsagerTelefon.setDisable(false);
         } else {
-            for (TextField tf : txfLedsager) {
-                tf.setDisable(true);
-                lvwUdflugter.setDisable(true);
-                cboxUdflugter.setDisable(true);
-            }
+            lvwUdflugter.setDisable(true);
+            cboxUdflugter.setDisable(true);
+            txfLedsagerFornavn.setDisable(true);
+            txfLedsagerEfternavn.setDisable(true);
+            txfLedsagerAdresse.setDisable(true);
+            txfLedsagerTelefon.setDisable(true);
         }
 
         updateTotalPrice();
@@ -240,12 +229,12 @@ public class TilmeldKonferenceWindow extends Stage {
         confirm.showAndWait();
         Person deltager = null;
         if (confirm.confirmed) {
-            Service.createPerson(txfDeltager[0].getText(), txfDeltager[1].getText(), txfDeltager[2].getText(),
-                    txfDeltager[3].getText());
+            Service.createPerson(txfFornavn.getText(), txfEfternavn.getText(), txfAdresse.getText(),
+                    txfTelefon.getText());
             Person ledsager = null;
             if (cbLedsager.isSelected()) {
-                Service.createPerson(txfLedsager[0].getText(), txfLedsager[1].getText(), txfLedsager[2].getText(),
-                        txfLedsager[3].getText());
+                Service.createPerson(txfLedsagerFornavn.getText(), txfLedsagerEfternavn.getText(),
+                        txfLedsagerAdresse.getText(), txfLedsagerTelefon.getText());
             }
 
             Service.createTilmelding(konference, dpFraDato.getValue(), dpTilDato.getValue(), deltager, ledsager,
@@ -297,14 +286,6 @@ public class TilmeldKonferenceWindow extends Stage {
         }
 
         lblTotalPrice.setText("TOTAL: " + total);
-    }
-
-    // External
-    public void updateKonferenceBasedNodes() {
-        cboxHotels.getItems().removeAll(cboxHotels.getItems());
-        cboxHotels.getItems().addAll(konference.getHoteller());
-        dpFraDato.setValue(konference.getFraDato());
-        dpTilDato.setValue(konference.getTilDato());
     }
 
 }

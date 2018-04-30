@@ -25,6 +25,17 @@ public class OpretRedigerKonferenceWindow extends Stage {
 
     public void setKonference(Konference konference) {
         this.konference = konference;
+        lvwUdflugts.setDisable(konference == null);
+        txfUdflugtNavn.setDisable(konference == null);
+        txfUdflugtBeskrivelse.setDisable(konference == null);
+        txfUdflugtPris.setDisable(konference == null);
+        btnUdflugtOpretRediger.setDisable(konference == null);
+        btnUdflugtSlet.setDisable(konference == null);
+        dpUdflugtDato.setDisable(konference == null);
+        cbUdflugtFrokost.setDisable(konference == null);
+
+        btnGem.setDisable(konference != null);
+        btnOpdater.setDisable(konference == null);
     }
 
     public Konference getKonference() {
@@ -199,9 +210,8 @@ public class OpretRedigerKonferenceWindow extends Stage {
     }
 
     private void btnGemAction() {
-        konference = Service.createKonference(txfNavn.getText(), txfAdresse.getText(), dpFraDato.getValue(),
-                dpTilDato.getValue(), txfBeskrivelse.getText(), Double.parseDouble(txfAfgift.getText()));
-        updateKonferenceBasedNodes();
+        setKonference(Service.createKonference(txfNavn.getText(), txfAdresse.getText(), dpFraDato.getValue(),
+                dpTilDato.getValue(), txfBeskrivelse.getText(), Double.parseDouble(txfAfgift.getText())));
     }
 
     private void btnOpdaterAction() {
@@ -222,19 +232,5 @@ public class OpretRedigerKonferenceWindow extends Stage {
     // External
     public void updateHotelList() {
         cboxHotelsUpdate();
-    }
-
-    public void updateKonferenceBasedNodes() {
-        lvwUdflugts.setDisable(konference == null);
-        txfUdflugtNavn.setDisable(konference == null);
-        txfUdflugtBeskrivelse.setDisable(konference == null);
-        txfUdflugtPris.setDisable(konference == null);
-        btnUdflugtOpretRediger.setDisable(konference == null);
-        btnUdflugtSlet.setDisable(konference == null);
-        dpUdflugtDato.setDisable(konference == null);
-        cbUdflugtFrokost.setDisable(konference == null);
-
-        btnGem.setDisable(konference != null);
-        btnOpdater.setDisable(konference == null);
     }
 }

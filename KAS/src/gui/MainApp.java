@@ -1,9 +1,5 @@
 package gui;
 
-import java.time.LocalDate;
-
-import application.Hotel;
-import application.HotelTillaeg;
 import application.Konference;
 import application.Service;
 import javafx.application.Application;
@@ -113,15 +109,10 @@ public class MainApp extends Application {
             if (cboxKonferencer.getSelectionModel().getSelectedItem() != null) {
                 opretRedigerKonferenceWindow.setKonference(cboxKonferencer.getSelectionModel().getSelectedItem());
             }
-            opretRedigerKonferenceWindow.updateKonferenceBasedNodes();
             opretRedigerKonferenceWindow.showAndWait();
             if (opretRedigerKonferenceWindow.getKonference() != null) {
                 updateKonferencerListe();
             }
-            // if (createConference.konference != null) {
-            // System.out.println("Konference oprettet!");
-            // updateKonferencerListe();
-            // }
         }
 
         public void btnHoteladminAction() {
@@ -130,7 +121,6 @@ public class MainApp extends Application {
 
         public void btnJoinAction() {
             tilmeldKonferenceWindow.setKonference(cboxKonferencer.getSelectionModel().getSelectedItem());
-            tilmeldKonferenceWindow.updateKonferenceBasedNodes();
             tilmeldKonferenceWindow.showAndWait();
         }
 
