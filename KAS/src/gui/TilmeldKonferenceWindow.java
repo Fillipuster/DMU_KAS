@@ -105,7 +105,7 @@ public class TilmeldKonferenceWindow extends Stage {
         dpTilDato.setOnAction(event -> updateTotalPrice());
         pane.add(dpTilDato, 0, 7);
 
-        Service.label(pane, "Vælge hotel:", 0, 8);
+        Service.label(pane, "Vælg hotel:", 0, 8);
         cboxHotels = new ComboBox<>();
         cboxHotels.setOnAction(event -> cboxHotelsAction());
         pane.add(cboxHotels, 0, 9);
@@ -195,6 +195,7 @@ public class TilmeldKonferenceWindow extends Stage {
     }
 
     private void cboxHotelsAction() {
+        cboxTillaeg.getItems().removeAll(cboxTillaeg.getItems());
         cboxTillaeg.getItems().addAll(cboxHotels.getSelectionModel().getSelectedItem().getHotelTillaeg());
         cboxTillaeg.setDisable(false);
 

@@ -76,6 +76,10 @@ public class Konference {
         this.tilmeldte.add(tilmelding);
     }
 
+    public ArrayList<Tilmelding> getTilmeldte() {
+        return new ArrayList<>(tilmeldte);
+    }
+
     public ArrayList<Udflugt> getUdflugter() {
         return new ArrayList<>(udflugter);
     }

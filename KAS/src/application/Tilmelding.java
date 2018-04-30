@@ -87,6 +87,10 @@ public class Tilmelding {
         this.hotelTillaeg.remove(tillaeg);
     }
 
+    public ArrayList<Udflugt> getUdflugter() {
+        return new ArrayList<>(udflugter);
+    }
+
     public void addUdflugt(Udflugt udflugt) {
         this.udflugter.add(udflugt);
     }
